@@ -5,26 +5,35 @@
  * student_array - global array to hold student objects
  * @type {Array}
  */
-
+var student_array = [];
 /**
  * inputIds - id's of the elements that are used to add students
  * @type {string[]}
  */
-
+    /*
+var student = new object();
+student.name = '';
+student.course = '';
+student.grade = '';  */
 /**
  * addClicked - Event Handler when user clicks the add button
  */
-
+function addClicked() {};
 /**
  * cancelClicked - Event Handler when user clicks the cancel button, should clear out student form
  */
-
+function cancelClicked() {};
 /**
  * addStudent - creates a student objects based on input fields in the form and adds the object to global student array
  *
  * @return undefined
  */
+function addStudent(name, course, grade) {
+    this.studentName = name;
+    this.courseName = course;
+    this.studentGrade = grade;
 
+};
 /**
  * clearAddStudentForm - clears out the form values based on inputIds variable
  */

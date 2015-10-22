@@ -34,7 +34,13 @@ function addClicked() {
     student_array.push(student.studentName);
     console.log(student_array);
     //return addStudent(student_name, student_course, student_grade);
+    var trow = $('<tr>');
+    var name = $('<td>').text(student_name);
+    var course = $('<td>').text(student_course);
+    var grade = $('<td>').text(student_grade);
+    $('tbody').append(name).append(course).append(grade);
     cancelClicked();
+
 };
 
 

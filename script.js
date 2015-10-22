@@ -31,7 +31,7 @@ function addClicked() {
     console.log(student_name, student_course, student_grade);
 
     var student = new addStudent(student_name, student_course, student_grade);
-    student_array.push(student);
+    student_array.push(student.studentName);
     console.log(student_array);
     //return addStudent(student_name, student_course, student_grade);
 };
@@ -42,9 +42,10 @@ function addClicked() {
  */
 function cancelClicked() {
     console.log('click works');
-    student_name= '';
-    student_course= '';
-    student_grade= '';
+    document.getElementById("studentName").value='';
+    document.getElementById("course").value= '';
+    document.getElementById("studentGrade").value = '';
+
 };
 /**
  * addStudent - creates a student objects based on input fields in the form and adds the object to global student array

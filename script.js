@@ -12,10 +12,12 @@ var average = null;
  */
 var student_array = [];
 
-var student_object = {};
 /**
  * inputIds - id's of the elements that are used to add students
  * @type {string[]}
+ * student_name = document.getElementById("studentName").value;
+   student_course = document.getElementById("course").value;
+  student_grade = document.getElementById("studentGrade").value;
  */
  /*
 var student = new object{};
@@ -27,15 +29,16 @@ student.grade = '';  */
  */
 function addClicked() {
     console.log("this works");
-    student_name = document.getElementById("studentName").value;
-    student_course = document.getElementById("course").value;
-    student_grade = document.getElementById("studentGrade").value;
+ //   student_name = document.getElementById("studentName").value;
+  //  student_course = document.getElementById("course").value;
+   // student_grade = document.getElementById("studentGrade").value;
 
     console.log(student_name, student_course, student_grade);
 
-    var student = new addStudent(student_name, student_course, student_grade);
+    var student = new addStudent(student_name, student_course, student_grade); //it's getting created as a variable here so it never fully become a global object.
+    console.log(student);
     student_array.push(student);
-    console.log(student_array);*/
+    console.log(student_array);
   //  var student = new addStudent(student_name, student_course, student_grade);
    // addStudent(student_name, student_course, student_grade);
     //addStudentToDom();
@@ -50,8 +53,8 @@ function addClicked() {
  */
 function cancelClicked() {
     console.log('click works');
-    document.getElementById("studentName").value='';
-    document.getElementById("course").value= '';
+    document.getElementById("studentName").value=null;
+    document.getElementById("course").value= null;
     document.getElementById("studentGrade").value = null;
 };
 /**
@@ -59,22 +62,12 @@ function cancelClicked() {
  *
  * @return undefined
  */
-function addStudent(name, course, grade) { //var = the function here? - RD?
-    this.student_name = name;
-    this.student_course = course;
-    this.student_grade = grade;
+function addStudent(name, course, grade) { //create object here (template)
+    this.studentName = name;
+    this.course = course;
+    this.studentGrade = grade;
     console.log('Name: ', name, 'Course: ', course, 'Grade: ', grade);
     console.log(student);
-  /*  for (i=0; i <= student_array.length; i++) {
-        student_array[i].student_name = name;
-        student_array[i].student_course = course;
-        student_array[i].student_grade = grade;
-    }*/
-    for (var i in student_array) {
-            student_object[i].name = name;
-            student_object[i].course = course;
-            student_object[i].grade = grade;
-    }
     console.log(student_array);
     addStudentToDom();
 };
@@ -126,13 +119,12 @@ function calculateAverage(student_array) {
 
 function addStudentToDom() {
     var trow = $('<tr>');
-    var name = $('<td>').text(student_name);
+    var name = $('<td>').text(student_name); //should be student_array[whatever].student_name (from the object)
     var course = $('<td>').text(student_course);
     var grade = $('<td>').text(student_grade);
     var button = $('<button>').addClass("btn btn-danger").on('click',clearAddStudentForm).text('Delete');
     $(trow).append(name).append(course).append(grade).append(button);
     $('tbody').append(trow);
-
 }
 /**
  * reset - resets the application to initial state. Global variables reset, DOM get reset to initial load state
@@ -140,7 +132,6 @@ function addStudentToDom() {
 function reset() {
     cancelClicked();
     $('.avgGrade').text('');
-
 }
 
 

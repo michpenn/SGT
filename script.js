@@ -4,6 +4,7 @@
 var student_name = '';
 var student_course = '';
 var student_grade = null;
+var average = null;
 
 /**
  * student_array - global array to hold student objects
@@ -68,6 +69,9 @@ function addStudent(name, course, grade) {
 function clearAddStudentForm(event) {
     console.log('clear');
     $(this).parent().remove();
+    student_array.splice(this, 1);
+    calculateAverage(student_array);
+    console.log(average);
 }
 
 /**
@@ -75,7 +79,7 @@ function clearAddStudentForm(event) {
  * @returns {number}
  */
 function calculateAverage(student_array) {
-    var average = 0;
+    average = 0;
     var total_grades = 0;
     //var total_grades_2 = '';
     for(var i=0; i<student_array.length; i++) {

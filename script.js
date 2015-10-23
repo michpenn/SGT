@@ -34,6 +34,7 @@ function addClicked() {
     student_array.push(student);
     console.log(student_array);
     addStudentToDom();
+    calculateAverage();
     cancelClicked();
 };
 
@@ -57,16 +58,30 @@ function addStudent(name, course, grade) {
     this.studentName = name;
     this.course = course;
     this.studentGrade = grade;
+
+    console.log('Name: ', name, 'Course: ', course, 'Grade: ', grade);
 };
 /**
  * clearAddStudentForm - clears out the form values based on inputIds variable
  */
+function clearAddStudentForm(event) {
+    console.log('clear');
+    $(this).parent().remove();
+}
 
 /**
  * calculateAverage - loop through the global student array and calculate average grade and return that value
  * @returns {number}
  */
-
+function calculateAverage(student_array) {
+    var average = '';
+    for(var i=0; i<student_array.length; i++) {
+        var total_grades = '';
+        total_grades += student_array[i].studentGrade;
+        average = total_grades/(i+1);
+    }
+    console.log("average = ", average);
+}
 /**
  * updateData - centralized function to update the average and call student list update
  */
@@ -88,7 +103,7 @@ function addStudentToDom() {
     var name = $('<td>').text(student_name);
     var course = $('<td>').text(student_course);
     var grade = $('<td>').text(student_grade);
-    var button = $('<button>').addClass("btn btn-danger").attr('onclick', 'console.log("delete works")').text('Delete');
+    var button = $('<button>').addClass("btn btn-danger").on('click',clearAddStudentForm).text('Delete');
     $(trow).append(name).append(course).append(grade).append(button);
     $('tbody').append(trow);
 }

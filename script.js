@@ -5,6 +5,7 @@ var student_name = '';
 var student_course = '';
 var student_grade = null;
 var average = null;
+var student = {};
 
 /**
  * student_array - global array to hold student objects
@@ -16,10 +17,7 @@ var student_array = [];
  * @type {string[]}
  */
  /*
-var student = new object{};
-student.name = '';
-student.course = '';
-student.grade = '';  */
+make variables storing the IDs here  */
 /**
  * addClicked - Event Handler when user clicks the add button
  */
@@ -31,7 +29,7 @@ function addClicked() {
 
     console.log(student_name, student_course, student_grade);
 
-    var student = new addStudent(student_name, student_course, student_grade);
+    student = new addStudent(student_name, student_course, student_grade);
     student_array.push(student);
     console.log(student_array);
     addStudentToDom();
@@ -70,6 +68,7 @@ function clearAddStudentForm(event) {
     console.log('clear');
     $(this).parent().remove();
     student_array.splice(this, 1);
+    //need to make a function that deletes the object from the array and put it here
     calculateAverage(student_array);
     console.log(average);
 }
@@ -81,15 +80,12 @@ function clearAddStudentForm(event) {
 function calculateAverage(student_array) {
     average = 0;
     var total_grades = 0;
-    //var total_grades_2 = '';
     for(var i=0; i<student_array.length; i++) {
         total_grades += parseInt(student_array[i].studentGrade);
-        //total_grades_2+= total_grades;
-        average = ((total_grades)/(i+1));
+        average = Math.round(((total_grades)/(i+1)));
     }
-    console.log(total_grades);
-    console.log(i);
     console.log("average = ", average);
+    $('.avgGrade').text(average);
 }
 /**
  * updateData - centralized function to update the average and call student list update

@@ -46,15 +46,13 @@ function cancelClicked() {
     document.getElementById("studentName").value='';
     document.getElementById("course").value= '';
     document.getElementById("studentGrade").value = '';
-
-
 };
 /**
  * addStudent - creates a student objects based on input fields in the form and adds the object to global student array
  *
  * @return undefined
  */
-function addStudent(name, course, grade) {
+function addStudent(name, course, grade) { //var = the function here? - RD?
     this.studentName = name;
     this.course = course;
     this.studentGrade = grade;
@@ -104,8 +102,17 @@ function addStudentToDom() {
 /**
  * reset - resets the application to initial state. Global variables reset, DOM get reset to initial load state
  */
+function reset() {
+    cancelClicked();
+
+}
 
 
 /**
  * Listen for the document to load and reset the data to the initial state
- */
+ */$( document ).ready(function() {
+    console.log( "ready!" );
+    reset();
+    student_array = [];
+
+});

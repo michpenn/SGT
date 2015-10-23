@@ -3,7 +3,7 @@
  */
 var student_name = '';
 var student_course = '';
-var student_grade = '';
+var student_grade = null;
 
 /**
  * student_array - global array to hold student objects
@@ -34,9 +34,10 @@ function addClicked() {
     student_array.push(student);
     console.log(student_array);
     addStudentToDom();
-    calculateAverage();
     cancelClicked();
-};
+    if(student_array.length > 0) {
+    calculateAverage(student_array)}
+}
 
 
 /**
@@ -46,7 +47,7 @@ function cancelClicked() {
     console.log('click works');
     document.getElementById("studentName").value='';
     document.getElementById("course").value= '';
-    document.getElementById("studentGrade").value = '';
+    document.getElementById("studentGrade").value = null;
 
 };
 /**
@@ -74,12 +75,16 @@ function clearAddStudentForm(event) {
  * @returns {number}
  */
 function calculateAverage(student_array) {
-    var average = '';
+    var average = 0;
+    var total_grades = 0;
+    //var total_grades_2 = '';
     for(var i=0; i<student_array.length; i++) {
-        var total_grades = '';
-        total_grades += student_array[i].studentGrade;
-        average = total_grades/(i+1);
+        total_grades += parseInt(student_array[i].studentGrade);
+        //total_grades_2+= total_grades;
+        average = ((total_grades)/(i+1));
     }
+    console.log(total_grades);
+    console.log(i);
     console.log("average = ", average);
 }
 /**

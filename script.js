@@ -14,8 +14,8 @@ var student_array = [];
  * inputIds - id's of the elements that are used to add students
  * @type {string[]}
  */
-    /*
-var student = new object();
+ /*
+var student = new object{};
 student.name = '';
 student.course = '';
 student.grade = '';  */
@@ -31,7 +31,7 @@ function addClicked() {
     console.log(student_name, student_course, student_grade);
 
     var student = new addStudent(student_name, student_course, student_grade);
-    student_array.push(student.studentName);
+    student_array.push(student);
     console.log(student_array);
     addStudentToDom();
     cancelClicked();
@@ -61,7 +61,13 @@ function addStudent(name, course, grade) {
 };
 /**
  * clearAddStudentForm - clears out the form values based on inputIds variable
+ *
  */
+function clearAddStudentForm(event) {
+    console.log('clear');
+    $(this).parent().remove();
+
+}
 
 /**
  * calculateAverage - loop through the global student array and calculate average grade and return that value
@@ -82,28 +88,6 @@ function addStudent(name, course, grade) {
  * @param studentObj
  */
 
-    /*
-
-     var trow = $('<tr>');
-     var name = $('<td>').text(student_name);
-     var course = $('<td>').text(student_course);
-     var grade = $('<td>').text(student_grade);
-     $('tbody').append(name).append(course).append(grade);
-
-
-var row = ('<tr>');
-var table_name = ('<td>', {
-    text: student_name
-});
-var table_course = ('<td>', {
-    text: student_course
-});
-
-var table_grade = ('<td>', {
-    text: student_grade
-});
-
-*/
 
 
 function addStudentToDom() {
@@ -111,7 +95,7 @@ function addStudentToDom() {
     var name = $('<td>').text(student_name);
     var course = $('<td>').text(student_course);
     var grade = $('<td>').text(student_grade);
-    var button = $('<button>').addClass("btn btn-danger").attr("onclick", "console.log('this worked')").text('Delete'); //attr to target this later?
+    var button = $('<button>').addClass("btn btn-danger").on('click',clearAddStudentForm).text('Delete');
     $(trow).append(name).append(course).append(grade).append(button);
     $('tbody').append(trow);
 

@@ -66,7 +66,8 @@ function addStudent(name, course, grade) {
 function clearAddStudentForm(event) {
     console.log('clear');
     $(this).parent().remove();
-
+    student_array.splice(this, 1);
+    console.log(student_array);
 }
 
 /**

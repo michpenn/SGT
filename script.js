@@ -3,13 +3,16 @@
  */
 var student_name = '';
 var student_course = '';
-var student_grade = '';
+var student_grade = null;
+var average = null;
 
 /**
  * student_array - global array to hold student objects
  * @type {Array}
  */
 var student_array = [];
+
+var student_object = {};
 /**
  * inputIds - id's of the elements that are used to add students
  * @type {string[]}
@@ -32,10 +35,14 @@ function addClicked() {
 
     var student = new addStudent(student_name, student_course, student_grade);
     student_array.push(student);
-    console.log(student_array);
-    addStudentToDom();
+    console.log(student_array);*/
+  //  var student = new addStudent(student_name, student_course, student_grade);
+   // addStudent(student_name, student_course, student_grade);
+    //addStudentToDom();
     cancelClicked();
-};
+    if(student_array.length > 0) {
+    calculateAverage(student_array)}
+}
 
 
 /**
@@ -45,7 +52,7 @@ function cancelClicked() {
     console.log('click works');
     document.getElementById("studentName").value='';
     document.getElementById("course").value= '';
-    document.getElementById("studentGrade").value = '';
+    document.getElementById("studentGrade").value = null;
 };
 /**
  * addStudent - creates a student objects based on input fields in the form and adds the object to global student array
@@ -53,18 +60,33 @@ function cancelClicked() {
  * @return undefined
  */
 function addStudent(name, course, grade) { //var = the function here? - RD?
-    this.studentName = name;
-    this.course = course;
-    this.studentGrade = grade;
+    this.student_name = name;
+    this.student_course = course;
+    this.student_grade = grade;
+    console.log('Name: ', name, 'Course: ', course, 'Grade: ', grade);
+    console.log(student);
+  /*  for (i=0; i <= student_array.length; i++) {
+        student_array[i].student_name = name;
+        student_array[i].student_course = course;
+        student_array[i].student_grade = grade;
+    }*/
+    for (var i in student_array) {
+            student_object[i].name = name;
+            student_object[i].course = course;
+            student_object[i].grade = grade;
+    }
+    console.log(student_array);
+    addStudentToDom();
 };
 /**
  * clearAddStudentForm - clears out the form values based on inputIds variable
  *
  */
 function clearAddStudentForm(event) {
-    console.log('clear');
     $(this).parent().remove();
-    student_array.splice(this, 1);
+    student_array.splice($(this), 1);
+    calculateAverage(student_array);
+    console.log(average);
     console.log(student_array);
 }
 
@@ -72,7 +94,20 @@ function clearAddStudentForm(event) {
  * calculateAverage - loop through the global student array and calculate average grade and return that value
  * @returns {number}
  */
-
+function calculateAverage(student_array) {
+    average = 0;
+    var total_grades = 0;
+    //var total_grades_2 = '';
+    for(var i=0; i<student_array.length; i++) {
+        total_grades += parseInt(student_array[i].studentGrade);
+        //total_grades_2+= total_grades;
+        average = ((total_grades)/(i+1));
+    }
+    console.log(total_grades);
+    console.log(i);
+    console.log("average = ", average);
+    $('.avgGrade').text(average);
+}
 /**
  * updateData - centralized function to update the average and call student list update
  */
@@ -104,6 +139,7 @@ function addStudentToDom() {
  */
 function reset() {
     cancelClicked();
+    $('.avgGrade').text('');
 
 }
 

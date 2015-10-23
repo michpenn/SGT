@@ -33,14 +33,8 @@ function addClicked() {
     var student = new addStudent(student_name, student_course, student_grade);
     student_array.push(student.studentName);
     console.log(student_array);
-    //return addStudent(student_name, student_course, student_grade);
-    var trow = $('<tr>');
-    var name = $('<td>').text(student_name);
-    var course = $('<td>').text(student_course);
-    var grade = $('<td>').text(student_grade);
-    $('tbody').append(name).append(course).append(grade);
+    addStudentToDom();
     cancelClicked();
-
 };
 
 
@@ -88,6 +82,40 @@ function addStudent(name, course, grade) {
  * @param studentObj
  */
 
+    /*
+
+     var trow = $('<tr>');
+     var name = $('<td>').text(student_name);
+     var course = $('<td>').text(student_course);
+     var grade = $('<td>').text(student_grade);
+     $('tbody').append(name).append(course).append(grade);
+
+
+var row = ('<tr>');
+var table_name = ('<td>', {
+    text: student_name
+});
+var table_course = ('<td>', {
+    text: student_course
+});
+
+var table_grade = ('<td>', {
+    text: student_grade
+});
+
+*/
+
+
+function addStudentToDom() {
+    var trow = $('<tr>');
+    var name = $('<td>').text(student_name);
+    var course = $('<td>').text(student_course);
+    var grade = $('<td>').text(student_grade);
+    var button = $('<button>').addClass("btn btn-danger").attr("onclick", "console.log('this worked')").text('Delete'); //attr to target this later?
+    $(trow).append(name).append(course).append(grade).append(button);
+    $('tbody').append(trow);
+
+}
 /**
  * reset - resets the application to initial state. Global variables reset, DOM get reset to initial load state
  */

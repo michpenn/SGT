@@ -5,7 +5,7 @@ var student_name = '';
 var student_course = '';
 var student_grade = null;
 var average = null;
-var student = {};
+var student;
 
 /**
  * student_array - global array to hold student objects
@@ -18,6 +18,10 @@ var student_array = [];
  */
  /*
 make variables storing the IDs here  */
+//var find_student_name = $('.student-add-form').find('#studentName').val();
+//var find_student_course = $('.student-add-form').find('#course').val();
+//var find_student_grade = $('.student-add-form').find('#studentGrade').val();
+
 /**
  * addClicked - Event Handler when user clicks the add button
  */
@@ -26,16 +30,15 @@ function addClicked() {
     student_name = document.getElementById("studentName").value;
     student_course = document.getElementById("course").value;
     student_grade = document.getElementById("studentGrade").value;
-
-    console.log(student_name, student_course, student_grade);
-
-    student = new addStudent(student_name, student_course, student_grade);
+    //student = new addStudent(student_name, student_course, student_grade);
+    //student_array.push(student);
+        student = addStudent(student_name, student_course, student_grade);
     student_array.push(student);
     console.log(student_array);
-    addStudentToDom();
-    cancelClicked();
-    if(student_array.length > 0) {
-    calculateAverage(student_array)}
+   // addStudentToDom();
+   // cancelClicked();
+    //if(student_array.length > 0) {
+    //calculateAverage(student_array)}
 }
 
 
@@ -55,12 +58,12 @@ function cancelClicked() {
  * @return undefined
  */
 function addStudent(name, course, grade) {
-    this.studentName = name;
-    this.course = course;
-    this.studentGrade = grade;
-
-    console.log('Name: ', name, 'Course: ', course, 'Grade: ', grade);
-};
+    var output_student = {};
+    output_student.student_name = name;
+    output_student.course = course;
+    output_student.student_grade = grade;
+    return output_student;
+}
 /**
  * clearAddStudentForm - clears out the form values based on inputIds variable
  */

@@ -70,7 +70,7 @@ function addStudent(name, course, grade) {
 function clearAddStudentForm(event) {
     console.log('clear');
     $(this).parent().remove();
-    student_array.splice(this, 1);
+    //student_array.splice(this, 1);
     //need to make a function that deletes the object from the array and put it here
     calculateAverage(student_array);
     console.log(average);

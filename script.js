@@ -18,9 +18,10 @@ var student_array = [];
  */
  /*
 make variables storing the IDs here  */
-//var find_student_name = $('.student-add-form').find('#studentName').val();
-//var find_student_course = $('.student-add-form').find('#course').val();
-//var find_student_grade = $('.student-add-form').find('#studentGrade').val();
+var find_student_name = $('#studentName');
+var find_student_course = $('#course');
+var find_student_grade = $('#studentGrade');
+//var find_form_inputs = $('.form-control:input');
 
 /**
  * addClicked - Event Handler when user clicks the add button
@@ -31,14 +32,14 @@ function addClicked() {
     student_course = document.getElementById("course").value;
     student_grade = document.getElementById("studentGrade").value;
     //student = new addStudent(student_name, student_course, student_grade);
-    //student_array.push(student);
-        student = addStudent(student_name, student_course, student_grade);
+    student = addStudent(student_name, student_course, student_grade);
     student_array.push(student);
-    console.log(student_array);
-   // addStudentToDom();
-   // cancelClicked();
-    //if(student_array.length > 0) {
-    //calculateAverage(student_array)}
+    console.log(student_array, student);
+    addStudentToDom(student);
+    updateData();
+    clearAddStudentForm();
+   //cancelClicked();
+
 }
 
 
@@ -67,13 +68,23 @@ function addStudent(name, course, grade) {
 /**
  * clearAddStudentForm - clears out the form values based on inputIds variable
  */
-function clearAddStudentForm(event) {
+/*function clearAddStudentForm(event) {
     console.log('clear');
     $(this).parent().remove();
     //student_array.splice(this, 1);
     //need to make a function that deletes the object from the array and put it here
     calculateAverage(student_array);
     console.log(average);
+} */
+
+function clearAddStudentForm() {
+    console.log('clearAddStudentForm');
+    find_student_name.val('');
+    find_student_course.val('');
+    find_student_grade.val(null);
+    console.log('all cleared');
+    //need help with this
+    cancelClicked();
 }
 
 /**
@@ -84,7 +95,7 @@ function calculateAverage(student_array) {
     average = 0;
     var total_grades = 0;
     for(var i=0; i<student_array.length; i++) {
-        total_grades += parseInt(student_array[i].studentGrade);
+        total_grades += parseInt(student_array[i].student_grade);
         average = Math.round(((total_grades)/(i+1)));
     }
     console.log("average = ", average);
@@ -93,11 +104,14 @@ function calculateAverage(student_array) {
 /**
  * updateData - centralized function to update the average and call student list update
  */
-
+function updateData () {
+    calculateAverage(student_array);
+    //updateStudentList will eventually go here too
+}
 /**
  * updateStudentList - loops through global student array and appends each objects data into the student-list-container > list-body
  */
-
+//this one confuses me
 /**
  * addStudentToDom - take in a student object, create html elements from the values and then append the elements
  * into the .student_list tbody
@@ -111,7 +125,8 @@ function addStudentToDom() {
     var name = $('<td>').text(student_name);
     var course = $('<td>').text(student_course);
     var grade = $('<td>').text(student_grade);
-    var button = $('<button>').addClass("btn btn-danger").on('click',clearAddStudentForm).text('Delete');
+    var button = $('<button>').addClass("btn btn-danger").text('Delete');
+    //.on('click',clearAddStudentForm)
     $(trow).append(name).append(course).append(grade).append(button);
     $('tbody').append(trow);
 }

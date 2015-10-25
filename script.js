@@ -36,13 +36,15 @@ function addClicked() {
     addStudentToDom(student);
     updateData();
     clearAddStudentForm();
-   //cancelClicked();
+    cancelClicked();
 
 }
 /**
  * cancelClicked - Event Handler when user clicks the cancel button, should clear out student form
  */
-
+function cancelClicked() {
+    $('input').text('');
+}
 /**
  * addStudent - creates a student objects based on input fields in the form and adds the object to global student array
  *
@@ -53,6 +55,11 @@ function addStudent(name, course, grade) {
     output_student.student_name = name;
     output_student.course = course;
     output_student.student_grade = grade;
+    output_student.delete = function(){
+        delete output_student.student_name;
+        delete output_student.course;
+        delete output_student.student_grade;
+    };
     return output_student;
 }
 /**
@@ -73,6 +80,8 @@ function clearAddStudentForm() {
     find_student_course.val('');
     find_student_grade.val(null);
     console.log('all cleared');
+    $(this).parent().remove();
+    updateData();
     //need help with this
     cancelClicked();
 }
@@ -102,6 +111,17 @@ function updateData () {
  * updateStudentList - loops through global student array and appends each objects data into the student-list-container > list-body
  */
 //this one confuses me
+//I think it just means this is where we append the data from the array to the body > table.
+function updateStudentList() {
+    var trow = $('<tr>');
+    var name = $('<td>').text(student_name);
+    var course = $('<td>').text(student_course);
+    var grade = $('<td>').text(student_grade);
+    trow.append(name).append(course).append(grade);
+
+   // student_array.splice(this, 1); going to use the delete function.
+    console.log(student_array);
+}
 /**
  * addStudentToDom - take in a student object, create html elements from the values and then append the elements
  * into the .student_list tbody
@@ -112,7 +132,10 @@ function addStudentToDom() {
     var name = $('<td>').text(student_name);
     var course = $('<td>').text(student_course);
     var grade = $('<td>').text(student_grade);
-    var button = $('<button>').addClass("btn btn-danger").text('Delete');
+    var button = $('<button>').addClass("btn btn-danger").on('click',function(){
+        student.delete();
+        clearAddStudentForm();
+    }).text('Delete');
     //.on('click',clearAddStudentForm)
     $(trow).append(name).append(course).append(grade).append(button);
     $('tbody').append(trow);

@@ -39,13 +39,16 @@ function addClicked() {
  *
  * @return undefined
  */
-function addStudent(name, course, grade){
+function addStudent(name, course, grade) {
     var output_student = {};
     output_student.student_name = name;
     output_student.course = course;
     output_student.student_grade = grade;
+    output_student.delete = function () {
+    };
     console.log(student);
     return output_student;
+}
 /*
     for (i=0; i <= student_array.length; i++) {
         student_array[i].student_name = name;
@@ -80,10 +83,10 @@ function addStudentToDom() {
     var name = $('<td>').text(student_name);
     var course = $('<td>').text(student_course);
     var grade = $('<td>').text(student_grade);
-    var button = $('<button>').addClass("btn btn-danger").on('click',clearAddStudentForm).text('Delete');
+    var button = $('<button>').addClass("btn btn-danger").on('click',student.delete).text('Delete');
     $(trow).append(name).append(course).append(grade).append(button);
     $('tbody').append(trow);
-}}
+}
 /**
  * reset - resets the application to initial state. Global variables reset, DOM get reset to initial load state
  */

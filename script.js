@@ -43,7 +43,8 @@ function addClicked() {
  * cancelClicked - Event Handler when user clicks the cancel button, should clear out student form
  */
 function cancelClicked() {
-    $('input').text('');
+    $('input').val('');
+
 }
 /**
  * addStudent - creates a student objects based on input fields in the form and adds the object to global student array
@@ -80,7 +81,6 @@ function clearAddStudentForm() {
     find_student_course.val('');
     find_student_grade.val(null);
     console.log('all cleared');
-    $(this).parent().remove();
     updateData();
     //need help with this
     cancelClicked();
@@ -99,6 +99,7 @@ function calculateAverage(student_array) {
     }
     console.log("average = ", average);
     $('.avgGrade').text(average);
+    //to avoid NaN maybe add an if statement here.
 }
 /**
  * updateData - centralized function to update the average and call student list update
@@ -135,6 +136,7 @@ function addStudentToDom() {
     var button = $('<button>').addClass("btn btn-danger").on('click',function(){
         student.delete();
         clearAddStudentForm();
+        $(this).parent().remove();
     }).text('Delete');
     //.on('click',clearAddStudentForm)
     $(trow).append(name).append(course).append(grade).append(button);

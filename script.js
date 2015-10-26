@@ -34,6 +34,7 @@ function addClicked() {
     student_array.push(student);
     console.log(student_array, student);
     addStudentToDom(student);
+
     updateData();
     clearAddStudentForm();
     cancelClicked();
@@ -152,3 +153,6 @@ function addStudentToDom(student) {
 /**
  * Listen for the document to load and reset the data to the initial state
  */
+$( document ).ready(function() {
+    clearAddStudentForm();
+});

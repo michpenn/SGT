@@ -38,6 +38,7 @@ function addClicked() {
     clearAddStudentForm();
     cancelClicked();
 
+
 }
 /**
  * cancelClicked - Event Handler when user clicks the cancel button, should clear out student form
@@ -57,10 +58,11 @@ function addStudent(name, course, grade) {
     output_student.course = course;
     output_student.student_grade = grade;
     output_student.delete = function(){
-        delete output_student.student_name;
-        delete output_student.course;
-        delete output_student.student_grade;
+        delete this.student_name;
+        delete this.course;
+        delete this.student_grade;
     };
+
     return output_student;
 }
 /**
@@ -128,11 +130,11 @@ function updateStudentList() {
  * into the .student_list tbody
  * @param studentObj
  */
-function addStudentToDom() {
+function addStudentToDom(student) {
     var trow = $('<tr>');
-    var name = $('<td>').text(student_name);
-    var course = $('<td>').text(student_course);
-    var grade = $('<td>').text(student_grade);
+    var name = $('<td>').text(this.student_name);
+    var course = $('<td>').text(this.course);
+    var grade = $('<td>').text(this.student_grade);
     var button = $('<button>').addClass("btn btn-danger").on('click',function(){
         student.delete();
         clearAddStudentForm();

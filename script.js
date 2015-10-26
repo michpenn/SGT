@@ -34,7 +34,6 @@ function addClicked() {
     student_array.push(student);
     console.log(student_array, student);
     addStudentToDom(student);
-
     updateData();
     clearAddStudentForm();
     cancelClicked();
@@ -84,7 +83,7 @@ function clearAddStudentForm() {
     find_student_course.val('');
     find_student_grade.val(null);
     console.log('all cleared');
-    updateData();
+    //updateData();
     //need help with this
     cancelClicked();
 }
@@ -138,7 +137,8 @@ function addStudentToDom(student) {
     var grade = $('<td>').text(this.student_grade);
     var button = $('<button>').addClass("btn btn-danger").on('click',function(){
         student.delete();
-        clearAddStudentForm();
+        //clearAddStudentForm();
+        updateData();
         $(this).parent().remove();
     }).text('Delete');
     //.on('click',clearAddStudentForm)
@@ -148,11 +148,15 @@ function addStudentToDom(student) {
 /**
  * reset - resets the application to initial state. Global variables reset, DOM get reset to initial load state
  */
-
+function reset(){
+    student_array =[];
+    student ={};
+}
 
 /**
  * Listen for the document to load and reset the data to the initial state
  */
 $( document ).ready(function() {
     clearAddStudentForm();
+    //reset()?
 });

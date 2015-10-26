@@ -144,11 +144,15 @@ function addStudentToDom(student) {
 function reset(){
     student_array =[];
     student ={};
+    var student_name ='';
+    var student_course = '';
+    var student_grade = null;
+    var average = null;
 }
 /**
  * Listen for the document to load and reset the data to the initial state
  */
 $( document ).ready(function() {
     clearAddStudentForm();
-    //reset()?
+    reset();
 });

@@ -55,7 +55,7 @@ function addStudent(name, course, grade) {
     output_student.course = course;
     output_student.student_grade = grade;
     output_student.delete = function(){
-        student_array.splice(student_array.indexOf(this),1);
+        student_array.splice(student_array.indexOf($(this)),1);
     };
     return output_student;
 }
@@ -129,7 +129,7 @@ function addStudentToDom(student) {
     var course = $('<td>').text(this.course);
     var grade = $('<td>').text(this.student_grade);
     var button = $('<button>').addClass("btn btn-danger").on('click',function(){
-        student.delete(); //this.delete maybe.
+        student.delete(); //this.delete maybe. -> NO!
         //clearAddStudentForm();
         updateData();
         $(this).parent().remove();
@@ -144,10 +144,10 @@ function addStudentToDom(student) {
 function reset(){
     student_array =[];
     student ={};
-    var student_name ='';
-    var student_course = '';
-    var student_grade = null;
-    var average = null;
+    student_name ='';
+    student_course = '';
+    student_grade = null;
+    average = null;
 }
 /**
  * Listen for the document to load and reset the data to the initial state

@@ -11,12 +11,14 @@ var student;
  * @type {Array}
  */
 var student_array = [];
+
 /**
  * inputIds - id's of the elements that are used to add students
  * @type {string[]}
  */
 /*
- make variables storing the IDs here */
+ make variables storing the IDs here
+ */
 var find_student_name = $('#studentName');
 var find_student_course = $('#course');
 var find_student_grade = $('#studentGrade');
@@ -54,11 +56,11 @@ function cancelClicked() {
 function addStudent(name, course, grade) {
     var output_student = {};
     output_student.student_name = name;
-        output_student.course = course;
-        output_student.student_grade = grade;
-        output_student.delete = function () {
-            student_array.splice(student_array.indexOf(this), 1);
-        };
+    output_student.course = course;
+    output_student.student_grade = grade;
+    output_student.delete = function () {
+        student_array.splice(student_array.indexOf(this), 1);
+    };
     return output_student;
 }
 

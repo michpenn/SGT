@@ -16,8 +16,8 @@ var student_array = [];
  * inputIds - id's of the elements that are used to add students
  * @type {string[]}
  */
- /*
-make variables storing the IDs here  */
+/*
+ make variables storing the IDs here  */
 var find_student_name = $('#studentName');
 var find_student_course = $('#course');
 var find_student_grade = $('#studentGrade');
@@ -38,7 +38,7 @@ function addClicked() {
     addStudentToDom(student);
     updateData();
     clearAddStudentForm();
-   cancelClicked();
+    cancelClicked();
 
 }
 
@@ -60,8 +60,8 @@ function addStudent(name, course, grade) {
     output_student.student_name = name;
     output_student.course = course;
     output_student.student_grade = grade;
-    output_student.delete = function() {
-        student_array.splice(student_array.indexOf(this),1);
+    output_student.delete = function () {
+        student_array.splice(student_array.indexOf(this), 1);
     };
     return output_student;
 }
@@ -85,9 +85,9 @@ function clearAddStudentForm() {
 function calculateAverage(student_array) {
     average = 0;
     var total_grades = 0;
-    for(var i=0; i<student_array.length; i++) {
+    for (var i = 0; i < student_array.length; i++) {
         total_grades += parseInt(student_array[i].student_grade);
-        average = Math.round(((total_grades)/(i+1)));
+        average = Math.round(((total_grades) / (i + 1)));
     }
     console.log("average = ", average);
     $('.avgGrade').text(average);
@@ -97,7 +97,7 @@ function calculateAverage(student_array) {
 /**
  * updateData - centralized function to update the average and call student list update
  */
-function updateData () {
+function updateData() {
     calculateAverage(student_array);
     //updateStudentList will eventually go here too
 }
@@ -122,7 +122,7 @@ function addStudentToDom(student) {
     var name = $('<td>').text(student.student_name);
     var course = $('<td>').text(student.course);
     var grade = $('<td>').text(student.student_grade);
-    var button = $('<button>').addClass("btn btn-danger").on('click',function(){
+    var button = $('<button>').addClass("btn btn-danger").on('click', function () {
         student.delete(); //this.delete maybe. -> NO!
         //clearAddStudentForm();
         updateData();
@@ -133,15 +133,14 @@ function addStudentToDom(student) {
 }
 
 
-
 /**
  * reset - resets the application to initial state. Global variables reset, DOM get reset to initial load state
  */
 
-function reset(){
-    student_array =[];
-    student ={};
-    student_name ='';
+function reset() {
+    student_array = [];
+    student = {};
+    student_name = '';
     student_course = '';
     student_grade = null;
     average = null;
@@ -149,7 +148,7 @@ function reset(){
 /**
  * Listen for the document to load and reset the data to the initial state
  */
-$( document ).ready(function() {
+$(document).ready(function () {
     clearAddStudentForm();
     reset();
 });

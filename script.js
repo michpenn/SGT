@@ -51,11 +51,11 @@ function cancelClicked() {
  */
 function addStudent(name, course, grade) {
     var output_student = {};
-    output_student.student_name = name;
-    output_student.course = course;
-    output_student.student_grade = grade;
+    output_student.student_name = name,
+    output_student.course = course,
+    output_student.student_grade = grade,
     output_student.delete = function(){
-        student_array.splice(student_array.indexOf($(this)),1);
+        student_array.splice(student_array.indexOf(this),1);
     };
     return output_student;
 }
@@ -125,9 +125,9 @@ function updateStudentList() {
  */
 function addStudentToDom(student) {
     var trow = $('<tr>');
-    var name = $('<td>').text(this.student_name);
-    var course = $('<td>').text(this.course);
-    var grade = $('<td>').text(this.student_grade);
+    var name = $('<td>').text(student.student_name);
+    var course = $('<td>').text(student.course);
+    var grade = $('<td>').text(student.student_grade);
     var button = $('<button>').addClass("btn btn-danger").on('click',function(){
         student.delete(); //this.delete maybe. -> NO!
         //clearAddStudentForm();

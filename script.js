@@ -25,10 +25,7 @@ var find_student_grade = $('#studentGrade');
  * addClicked - Event Handler when user clicks the add button
  */
 function addClicked() {
-    console.log("this works&q
-    uot;
-)
-    ;
+    console.log("this works");
     student_name = document.getElementById("studentName").value;
     student_course = document.getElementById("course").value;
     student_grade = document.getElementById("studentGrade").value;
@@ -41,12 +38,14 @@ function addClicked() {
     clearAddStudentForm();
     cancelClicked();
 }
+
 /**
  * cancelClicked - Event Handler when user clicks the cancel button, should clear out student form
  */
 function cancelClicked() {
     $('input').val('');
 }
+
 /**
  * addStudent - creates a student objects based on input fields in the form and adds the object to global student array
  *
@@ -62,6 +61,7 @@ function addStudent(name, course, grade) {
         };
     return output_student;
 }
+
 /**
  * clearAddStudentForm - clears out the form values based on inputIds variable
  */
@@ -73,7 +73,6 @@ function addStudent(name, course, grade) {
  calculateAverage(student_array);
  console.log(average);
  } */
-
 function clearAddStudentForm() {
     console.log('clearAddStudentForm');
     find_student_name.val('');
@@ -84,6 +83,7 @@ function clearAddStudentForm() {
     //need help with this
     cancelClicked();
 }
+
 /**
  * calculateAverage - loop through the global student array and calculate average grade and return that value
  * @returns {number}
@@ -100,6 +100,7 @@ function calculateAverage(student_array) {
     //to avoid NaN maybe add an if statement here.
     //once object is deleted from array this will work.
 }
+
 /**
  * updateData - centralized function to update the average and call student list update
  */
@@ -121,6 +122,7 @@ function updateStudentList() {
     // student_array.splice(this, 1); going to use the delete function.
     console.log(student_array);
 }
+
 /**
  * addStudentToDom - take in a student object, create html elements from the values and then append the elements
  * into the .student_list tbody
@@ -141,6 +143,7 @@ function addStudentToDom(student) {
     $(trow).append(name).append(course).append(grade).append(button);
     $('tbody').append(trow);
 }
+
 /**
  * reset - resets the application to initial state. Global variables reset, DOM get reset to initial load state
  */
@@ -152,6 +155,7 @@ function reset() {
     student_grade = null;
     average = null;
 }
+
 /**
  * Listen for the document to load and reset the data to the initial state
  */

@@ -38,7 +38,7 @@ function addClicked() {
     addStudentToDom(student);
     updateData();
     clearAddStudentForm();
-   //cancelClicked();
+   cancelClicked();
 
 }
 
@@ -47,10 +47,7 @@ function addClicked() {
  * cancelClicked - Event Handler when user clicks the cancel button, should clear out student form
  */
 function cancelClicked() {
-    console.log('click works');
-    document.getElementById("studentName").value='';
-    document.getElementById("course").value= '';
-    document.getElementById("studentGrade").value = null;
+    $('input').val('');
 
 };
 /**
@@ -63,19 +60,14 @@ function addStudent(name, course, grade) {
     output_student.student_name = name;
     output_student.course = course;
     output_student.student_grade = grade;
+    output_student.delete = function() {
+        student_array.splice(student_array.indexOf(this),1);
+    };
     return output_student;
 }
 /**
  * clearAddStudentForm - clears out the form values based on inputIds variable
  */
-/*function clearAddStudentForm(event) {
-    console.log('clear');
-    $(this).parent().remove();
-    //student_array.splice(this, 1);
-    //need to make a function that deletes the object from the array and put it here
-    calculateAverage(student_array);
-    console.log(average);
-} */
 
 function clearAddStudentForm() {
     console.log('clearAddStudentForm');
@@ -83,7 +75,6 @@ function clearAddStudentForm() {
     find_student_course.val('');
     find_student_grade.val(null);
     console.log('all cleared');
-    //need help with this
     cancelClicked();
 }
 
@@ -100,6 +91,8 @@ function calculateAverage(student_array) {
     }
     console.log("average = ", average);
     $('.avgGrade').text(average);
+    //to avoid NaN maybe add an if statement here.
+    //once object is deleted from array this will work.
 }
 /**
  * updateData - centralized function to update the average and call student list update
@@ -111,30 +104,52 @@ function updateData () {
 /**
  * updateStudentList - loops through global student array and appends each objects data into the student-list-container > list-body
  */
-//this one confuses me
+function updateStudentList() {
+    var trow = $('<tr>');
+    var name = $('<td>').text(student_name);
+    var course = $('<td>').text(student_course);
+    var grade = $('<td>').text(student_grade);
+    trow.append(name).append(course).append(grade);
+    console.log(student_array);
+}
 /**
  * addStudentToDom - take in a student object, create html elements from the values and then append the elements
  * into the .student_list tbody
  * @param studentObj
  */
-
-
-
-function addStudentToDom() {
+function addStudentToDom(student) {
     var trow = $('<tr>');
-    var name = $('<td>').text(student_name);
-    var course = $('<td>').text(student_course);
-    var grade = $('<td>').text(student_grade);
-    var button = $('<button>').addClass("btn btn-danger").text('Delete');
-    //.on('click',clearAddStudentForm)
+    var name = $('<td>').text(student.student_name);
+    var course = $('<td>').text(student.course);
+    var grade = $('<td>').text(student.student_grade);
+    var button = $('<button>').addClass("btn btn-danger").on('click',function(){
+        student.delete(); //this.delete maybe. -> NO!
+        //clearAddStudentForm();
+        updateData();
+        $(this).parent().remove();
+    }).text('Delete');
     $(trow).append(name).append(course).append(grade).append(button);
     $('tbody').append(trow);
 }
+
+
+
 /**
  * reset - resets the application to initial state. Global variables reset, DOM get reset to initial load state
  */
 
-
+function reset(){
+    student_array =[];
+    student ={};
+    student_name ='';
+    student_course = '';
+    student_grade = null;
+    average = null;
+}
 /**
  * Listen for the document to load and reset the data to the initial state
  */
+$( document ).ready(function() {
+    clearAddStudentForm();
+    reset();
+});

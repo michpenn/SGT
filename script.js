@@ -15,8 +15,8 @@ var student_array =[];
  * inputIds - id's of the elements that are used to add students
  * @type {string[]}
  */
- /*
-make variables storing the IDs here  */
+/*
+ make variables storing the IDs here */
 var find_student_name = $('#studentName');
 var find_student_course = $('#course');
 var find_student_grade = $('#studentGrade');
@@ -25,7 +25,8 @@ var find_student_grade = $('#studentGrade');
  * addClicked - Event Handler when user clicks the add button
  */
 function addClicked() {
-    console.log("this works");
+    console.log("this works&q
+    uot;);
     student_name = document.getElementById("studentName").value;
     student_course = document.getElementById("course").value;
     student_grade = document.getElementById("studentGrade").value;
@@ -52,24 +53,24 @@ function cancelClicked() {
 function addStudent(name, course, grade) {
     var output_student = {};
     output_student.student_name = name,
-    output_student.course = course,
-    output_student.student_grade = grade,
-    output_student.delete = function(){
-        student_array.splice(student_array.indexOf(this),1);
-    };
+        output_student.course = course,
+        output_student.student_grade = grade,
+        output_student.delete = function(){
+            student_array.splice(student_array.indexOf(this),1);
+        };
     return output_student;
 }
 /**
  * clearAddStudentForm - clears out the form values based on inputIds variable
  */
 /*function clearAddStudentForm(event) {
-    console.log('clear');
-    $(this).parent().remove();
-    //student_array.splice(this, 1);
-    //need to make a function that deletes the object from the array and put it here
-    calculateAverage(student_array);
-    console.log(average);
-} */
+ console.log('clear');
+ $(this).parent().remove();
+ //student_array.splice(this, 1);
+ //need to make a function that deletes the object from the array and put it here
+ calculateAverage(student_array);
+ console.log(average);
+ } */
 
 function clearAddStudentForm() {
     console.log('clearAddStudentForm');
@@ -115,7 +116,7 @@ function updateStudentList() {
     var course = $('<td>').text(student_course);
     var grade = $('<td>').text(student_grade);
     trow.append(name).append(course).append(grade);
-   // student_array.splice(this, 1); going to use the delete function.
+    // student_array.splice(this, 1); going to use the delete function.
     console.log(student_array);
 }
 /**

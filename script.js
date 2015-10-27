@@ -6,7 +6,6 @@ var student_course = '';
 var student_grade = null;
 var average = null;
 var student;
-
 /**
  * student_array - global array to hold student objects
  * @type {Array}
@@ -24,7 +23,6 @@ var find_student_name = $('#studentName');
 var find_student_course = $('#course');
 var find_student_grade = $('#studentGrade');
 //var find_form_inputs = $('.form-control:input');
-
 /**
  * addClicked - Event Handler when user clicks the add button
  */
@@ -69,13 +67,14 @@ function addStudent(name, course, grade) {
 /**
  * clearAddStudentForm - clears out the form values based on inputIds variable
  */
-
 function clearAddStudentForm() {
     console.log('clearAddStudentForm');
     find_student_name.val('');
     find_student_course.val('');
     find_student_grade.val(null);
     console.log('all cleared');
+    //updateData();
+    //need help with this
     cancelClicked();
 }
 
@@ -107,12 +106,15 @@ function updateData() {
 /**
  * updateStudentList - loops through global student array and appends each objects data into the student-list-container > list-body
  */
+//this one confuses me
+//I think it just means this is where we append the data from the array to the body > table.
 function updateStudentList() {
     var trow = $('<tr>');
     var name = $('<td>').text(student_name);
     var course = $('<td>').text(student_course);
     var grade = $('<td>').text(student_grade);
     trow.append(name).append(course).append(grade);
+    // student_array.splice(this, 1); going to use the delete function.
     console.log(student_array);
 }
 
@@ -132,6 +134,7 @@ function addStudentToDom(student) {
         updateData();
         $(this).parent().remove();
     }).text('Delete');
+    //.on('click',clearAddStudentForm)
     $(trow).append(name).append(course).append(grade).append(button);
     $('tbody').append(trow);
 }

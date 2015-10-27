@@ -12,12 +12,14 @@ var student;
  * @type {Array}
  */
 var student_array = [];
+
 /**
  * inputIds - id's of the elements that are used to add students
  * @type {string[]}
  */
 /*
- make variables storing the IDs here  */
+ make variables storing the IDs here
+ */
 var find_student_name = $('#studentName');
 var find_student_course = $('#course');
 var find_student_grade = $('#studentGrade');
@@ -39,9 +41,7 @@ function addClicked() {
     updateData();
     clearAddStudentForm();
     cancelClicked();
-
 }
-
 
 /**
  * cancelClicked - Event Handler when user clicks the cancel button, should clear out student form
@@ -50,6 +50,7 @@ function cancelClicked() {
     $('input').val('');
 
 };
+
 /**
  * addStudent - creates a student objects based on input fields in the form and adds the object to global student array
  *
@@ -94,6 +95,7 @@ function calculateAverage(student_array) {
     //to avoid NaN maybe add an if statement here.
     //once object is deleted from array this will work.
 }
+
 /**
  * updateData - centralized function to update the average and call student list update
  */
@@ -101,6 +103,7 @@ function updateData() {
     calculateAverage(student_array);
     //updateStudentList will eventually go here too
 }
+
 /**
  * updateStudentList - loops through global student array and appends each objects data into the student-list-container > list-body
  */
@@ -112,6 +115,7 @@ function updateStudentList() {
     trow.append(name).append(course).append(grade);
     console.log(student_array);
 }
+
 /**
  * addStudentToDom - take in a student object, create html elements from the values and then append the elements
  * into the .student_list tbody
@@ -132,11 +136,9 @@ function addStudentToDom(student) {
     $('tbody').append(trow);
 }
 
-
 /**
  * reset - resets the application to initial state. Global variables reset, DOM get reset to initial load state
  */
-
 function reset() {
     student_array = [];
     student = {};
@@ -145,6 +147,7 @@ function reset() {
     student_grade = null;
     average = null;
 }
+
 /**
  * Listen for the document to load and reset the data to the initial state
  */

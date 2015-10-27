@@ -53,9 +53,9 @@ function cancelClicked() {
  */
 function addStudent(name, course, grade) {
     var output_student = {};
-    output_student.student_name = name,
-        output_student.course = course,
-        output_student.student_grade = grade,
+    output_student.student_name = name;
+        output_student.course = course;
+        output_student.student_grade = grade;
         output_student.delete = function () {
             student_array.splice(student_array.indexOf(this), 1);
         };
@@ -65,14 +65,6 @@ function addStudent(name, course, grade) {
 /**
  * clearAddStudentForm - clears out the form values based on inputIds variable
  */
-/*function clearAddStudentForm(event) {
- console.log('clear');
- $(this).parent().remove();
- //student_array.splice(this, 1);
- //need to make a function that deletes the object from the array and put it here
- calculateAverage(student_array);
- console.log(average);
- } */
 function clearAddStudentForm() {
     console.log('clearAddStudentForm');
     find_student_name.val('');
@@ -108,6 +100,7 @@ function updateData() {
     calculateAverage(student_array);
     //updateStudentList will eventually go here too
 }
+
 /**
  * updateStudentList - loops through global student array and appends each objects data into the student-list-container > list-body
  */

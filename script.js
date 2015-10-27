@@ -48,8 +48,7 @@ function addClicked() {
  */
 function cancelClicked() {
     $('input').val('');
-
-};
+}
 
 /**
  * addStudent - creates a student objects based on input fields in the form and adds the object to global student array
@@ -66,6 +65,7 @@ function addStudent(name, course, grade) {
     };
     return output_student;
 }
+
 /**
  * clearAddStudentForm - clears out the form values based on inputIds variable
  */

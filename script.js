@@ -31,7 +31,6 @@ function addClicked() {
     student_name = document.getElementById("studentName").value;
     student_course = document.getElementById("course").value;
     student_grade = document.getElementById("studentGrade").value;
-    //student = new addStudent(student_name, student_course, student_grade);
     student = addStudent(student_name, student_course, student_grade);
     student_array.push(student);
     console.log(student_array, student);
@@ -169,6 +168,20 @@ function populateTable(api_key) {
         success: function(response){
             if(response.success){
                 console.log(response);
+                var theNewObject = response;
+                var theNewObjectArray = theNewObject.data;
+                for(var i=0; i<theNewObjectArray.length; i++) {
+                    var theName = theNewObjectArray[i].name;
+                    var theCourse = theNewObjectArray[i].course;
+                    var theGrade = parseFloat(theNewObjectArray[i].grade);
+                    student = addStudent(theName, theCourse, theGrade);
+                    student_array.push(student);
+                    addStudentToDom(student);
+                    updateData();
+                }
+            }
+            else {
+                console.log('you request was denied');
             }
         }
     });

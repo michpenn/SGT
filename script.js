@@ -158,3 +158,15 @@ $(document).ready(function () {
     clearAddStudentForm();
     reset();
 });
+
+$.ajax({
+    dataType: 'json',
+    data: {"api_key": "dTR302IM4u"},
+    method: 'post',
+    url: 'http://s-apis.learningfuze.com/sgt/get',
+    success: function(response){
+        if(response.success){
+            console.log(response);
+        }
+    }
+});

@@ -159,14 +159,19 @@ $(document).ready(function () {
     reset();
 });
 
-$.ajax({
-    dataType: 'json',
-    data: {"api_key": "dTR302IM4u"},
-    method: 'post',
-    url: 'http://s-apis.learningfuze.com/sgt/get',
-    success: function(response){
-        if(response.success){
-            console.log(response);
+
+function populateTable(api_key) {
+    $.ajax({
+        dataType: 'json',
+        data: {"api_key": api_key},
+        method: 'post',
+        url: 'http://s-apis.learningfuze.com/sgt/get',
+        success: function(response){
+            if(response.success){
+                console.log(response);
+            }
         }
-    }
-});
+    });
+}
+
+

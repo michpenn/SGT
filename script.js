@@ -4,8 +4,12 @@
 var student_name = '';
 var student_course = '';
 var student_grade = null;
+var student_id = null;
+var new_id;
 var average = null;
 var student;
+var responseObject;
+var apiKey = 'dTR302IM4u';
 /**
  * student_array - global array to hold student objects
  * @type {Array}
@@ -31,9 +35,12 @@ function addClicked() {
     student_name = document.getElementById("studentName").value;
     student_course = document.getElementById("course").value;
     student_grade = document.getElementById("studentGrade").value;
-    student = addStudent(student_name, student_course, student_grade);
+    addStudentToDB(apiKey, student_name, student_course, student_grade);
+    console.log('new_id = ', new_id);
+    console.log('responseObject: ', responseObject);
+    student = addStudent(student_name, student_course, student_grade, new_id);
     student_array.push(student);
-    console.log(student_array, student);
+    console.log(student);
     addStudentToDom(student);
     updateData();
     clearAddStudentForm();
@@ -52,26 +59,49 @@ function cancelClicked() {
  *
  * @return undefined
  */
-function addStudent(name, course, grade) {
+function addStudent(name, course, grade, id) {
     var output_student = {};
     output_student.student_name = name;
     output_student.course = course;
     output_student.student_grade = grade;
+    output_student.id = id;
     output_student.delete = function () {
         student_array.splice(student_array.indexOf(this), 1);
     };
     return output_student;
 }
 
+function addStudentToDB(api_key, name, course, grade) {
+    $.ajax({
+        dataType: 'json',
+        data: {
+            "api_key": api_key,
+            "name": name,
+            "course": course,
+            "grade": grade
+        }
+        ,
+        method: 'post',
+        url: 'http://s-apis.learningfuze.com/sgt/create',
+        success: function(response) {
+            console.log('response', response , response['new_id']);
+            responseObject = response;
+            new_id= response['new_id'];
+        }
+
+
+    })
+}
+
+
+
 /**
  * clearAddStudentForm - clears out the form values based on inputIds variable
  */
 function clearAddStudentForm() {
-    console.log('clearAddStudentForm');
     find_student_name.val('');
     find_student_course.val('');
     find_student_grade.val(null);
-    console.log('all cleared');
     //updateData();
     //need help with this
     cancelClicked();
@@ -88,7 +118,7 @@ function calculateAverage(student_array) {
         total_grades += parseInt(student_array[i].student_grade);
         average = Math.round(((total_grades) / (i + 1)));
     }
-    console.log("average = ", average);
+    //console.log("average = ", average);
     $('.avgGrade').text(average);
     //to avoid NaN maybe add an if statement here.
     //once object is deleted from array this will work.
@@ -154,6 +184,11 @@ function reset() {
  * Listen for the document to load and reset the data to the initial state
  */
 $(document).ready(function () {
+    $body = $("body");
+
+
+    populateTable('dTR302IM4u');
+
     clearAddStudentForm();
     reset();
 });
@@ -165,16 +200,18 @@ function populateTable(api_key) {
         data: {"api_key": api_key},
         method: 'post',
         url: 'http://s-apis.learningfuze.com/sgt/get',
-        success: function(response){
-            if(response.success){
+        success: function (response) {
+            if (response.success) {
                 console.log(response);
                 var theNewObject = response;
                 var theNewObjectArray = theNewObject.data;
-                for(var i=0; i<theNewObjectArray.length; i++) {
+                for (var i = 0; i < theNewObjectArray.length; i++) {
                     var theName = theNewObjectArray[i].name;
                     var theCourse = theNewObjectArray[i].course;
                     var theGrade = parseFloat(theNewObjectArray[i].grade);
-                    student = addStudent(theName, theCourse, theGrade);
+                    var theID = theNewObjectArray[i].id;
+                    //new_id = theID;
+                    student = addStudent(theName, theCourse, theGrade, theID);
                     student_array.push(student);
                     addStudentToDom(student);
                     updateData();

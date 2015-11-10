@@ -4,11 +4,8 @@
 var student_name = '';
 var student_course = '';
 var student_grade = null;
-var student_id = null;
-var new_id;
 var average = null;
 var student;
-var responseObject;
 var apiKey = 'dTR302IM4u';
 /**
  * student_array - global array to hold student objects
@@ -31,14 +28,11 @@ var find_student_grade = $('#studentGrade');
  * addClicked - Event Handler when user clicks the add button
  */
 function addClicked() {
-    console.log("this works");
     student_name = document.getElementById("studentName").value;
     student_course = document.getElementById("course").value;
     student_grade = document.getElementById("studentGrade").value;
-    addStudentToDB(apiKey, student_name, student_course, student_grade);
-    console.log('new_id = ', new_id);
-    console.log('responseObject: ', responseObject);
-    student = addStudent(student_name, student_course, student_grade, new_id);
+    student = addStudent(student_name, student_course, student_grade);
+    addStudentToDB(apiKey, student);
     student_array.push(student);
     console.log(student);
     addStudentToDom(student);
@@ -59,40 +53,36 @@ function cancelClicked() {
  *
  * @return undefined
  */
-function addStudent(name, course, grade, id) {
+function addStudent(name, course, grade) {
     var output_student = {};
     output_student.student_name = name;
     output_student.course = course;
     output_student.student_grade = grade;
-    output_student.id = id;
     output_student.delete = function () {
         student_array.splice(student_array.indexOf(this), 1);
     };
     return output_student;
 }
 
-function addStudentToDB(api_key, name, course, grade) {
+function addStudentToDB(api_key, student) {
     $.ajax({
         dataType: 'json',
         data: {
             "api_key": api_key,
-            "name": name,
-            "course": course,
-            "grade": grade
+            "name": student.student_name,
+            "course": student.course,
+            "grade": student.student_grade,
         }
         ,
         method: 'post',
         url: 'http://s-apis.learningfuze.com/sgt/create',
-        success: function(response) {
-            console.log('response', response , response['new_id']);
-            responseObject = response;
-            new_id= response['new_id'];
+        success: function (response) {
+            student['id'] = response['new_id'];
         }
 
 
-    })
+    });
 }
-
 
 
 /**
@@ -209,9 +199,7 @@ function populateTable(api_key) {
                     var theName = theNewObjectArray[i].name;
                     var theCourse = theNewObjectArray[i].course;
                     var theGrade = parseFloat(theNewObjectArray[i].grade);
-                    var theID = theNewObjectArray[i].id;
-                    //new_id = theID;
-                    student = addStudent(theName, theCourse, theGrade, theID);
+                    student = addStudent(theName, theCourse, theGrade);
                     student_array.push(student);
                     addStudentToDom(student);
                     updateData();

@@ -108,7 +108,6 @@ function calculateAverage(student_array) {
         total_grades += parseInt(student_array[i].student_grade);
         average = Math.round(((total_grades) / (i + 1)));
     }
-    //console.log("average = ", average);
     $('.avgGrade').text(average);
     //to avoid NaN maybe add an if statement here.
     //once object is deleted from array this will work.
@@ -133,7 +132,6 @@ function updateStudentList() {
     var course = $('<td>').text(student_course);
     var grade = $('<td>').text(student_grade);
     trow.append(name).append(course).append(grade);
-    // student_array.splice(this, 1); going to use the delete function.
     console.log(student_array);
 }
 
@@ -150,12 +148,29 @@ function addStudentToDom(student) {
     var button = $('<button>').addClass("btn btn-danger").on('click', function () {
         student.delete(); //this.delete maybe. -> NO!
         //clearAddStudentForm();
+        deleteFromDB(apiKey, student.id);
         updateData();
         $(this).parent().remove();
     }).text('Delete');
     //.on('click',clearAddStudentForm)
     $(trow).append(name).append(course).append(grade).append(button);
     $('tbody').append(trow);
+}
+
+function deleteFromDB (api_key, student_id){
+    $.ajax({
+        dataType: 'json',
+        data: {"api_key": api_key, "student_id": student_id},
+        method: 'post',
+        url: 'http://s-apis.learningfuze.com/sgt/delete',
+        success: function(response) {
+            console.log('you successfully deleted the student');
+        }
+        error: function(error) {
+            console.log(error);
+            alert("You were not able to delete student number "+ student_id+ " for the following reasons: "+ error);
+        }
+    }
 }
 
 /**

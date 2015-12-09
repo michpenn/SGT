@@ -24,28 +24,71 @@ function check_form_inputs(){
     var student_name = $('#studentName').val();
     var student_course = $('#course').val();
     var student_grade = $('#studentGrade').val();
+    student_grade = parseFloat(student_grade);
+    var valid_studentName = true;
+    var valid_studentCourse = true;
+    var valid_studentGrade = true;
+
     //check name is valid
-    if(student_name.length > 0) {
+    if(student_name.length < 2) {
         console.log('please enter a name');
+        valid_studentName = false;
+    }
+    if(typeof student_name !='string') {
+        console.log('please enter a real name');
+        valid_studentName = false;
     }
     //check course is valid
-    if(student_course.length > 0) {
+    if(student_course.length < 2) {
         console.log('please enter a course');
+        valid_studentCourse = false;
+    }
+    if(typeof student_course !='string') {
+        console.log('please enter a real course');
+        valid_studentCourse = false;
     }
     //check grade is valid
-    if(student_grade.length > 0) {
+
+    if(student_grade.length == 0) {
         console.log('please enter a grade');
+        valid_studentGrade = false;
     }
 
-    //console.log(student_name, student_course, student_grade)
-}
+    if((student_grade > 100) || (student_grade < 0)) {
+        console.log('please enter a real grade');
+        valid_studentGrade = false;
+    }
 
+   //by setting the 'input type' to 'number' in the add student form, we don't need to worry about non numbers
+
+    //if all inputs are valid, make student object
+    if((valid_studentName) && (valid_studentCourse) && (valid_studentGrade)) {
+        //make inputs consistent with database inputs
+        student_name = capitalizeFirstLetter(student_name);
+        student_course = capitalizeFirstLetter(student_course);
+        student_grade = parseFloat(student_grade);
+        var student = new make_student_object(student_name, student_course, student_grade);
+        console.log(student);
+    }
+}
+//for formatting
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+//make student object
 function make_student_object(name, course, grade) {
     var self = this;
-    self.name = name,
-        self.course = course,
-        self.grade = grade
+    self.name = name;
+    self.course = course;
+    self.grade = grade;
+
 }
+
+//check if student exists. going to turn this into a prototype of a method of the student object
+function check_student() {
+
+}
+
 
 //must delete student from page and database
 function delete_student() {

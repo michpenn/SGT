@@ -54,7 +54,7 @@ session_start();
             <span class="input-group-addon">
                 <span class="glyphicon glyphicon-education"></span>
             </span>
-                <input type="text" class="form-control" name="studentGrade" id="studentGrade"
+                <input type="number" class="form-control" name="studentGrade" id="studentGrade"
                        placeholder="Student Grade">
             </div>
             <button type="button" class="btn btn-success form-group button_add">Add</button>
@@ -67,6 +67,7 @@ session_start();
             <thead>
             <tr>
                 <th>Student Name</th>
+                <th>Student ID</th>
                 <th>Student Course</th>
                 <th>Student Grade</th>
                 <th>Operations</th>

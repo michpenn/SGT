@@ -11,7 +11,7 @@ function click_handlers(){
         console.log('cancel button clicked');
     });
     $('.button_data').click(function(){
-        console.log('data button clicked');
+        populate_from_DB();
     });
 }
 
@@ -29,7 +29,16 @@ function clear_form(){}
 function calculate_average(){}
 
 //must pull info from data base
-function populate_from_DB(){}
+function populate_from_DB(){
+    $.ajax({
+        url: 'getdata.php',
+        dataType: 'html',
+        type: 'post',
+        success: function(output) {
+            $('.table_body').html(output);
+        }
+    });
+}
 
 //must handle errors
 function error_handing(){}

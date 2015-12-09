@@ -25,7 +25,7 @@ session_start();
 <body>
 <div class="container-fluid">
     <div class="page-header">
-        <!-- only show this element when the isnt on mobile -->
+        <!-- only show this element when the user isnt on mobile -->
         <h1 class="hidden-xs hidden-sm">Student Grade Table
             <small class="col-md-offset-6 text-right">Grade Average : <span class="avgGrade"></span></small>
         </h1>
@@ -72,11 +72,12 @@ session_start();
                 <th>Operations</th>
             </tr>
             </thead>
-            <tbody>
+            <tbody class="table_body">
             </tbody>
         </table>
     </div>
 </div>
 
 </body>
+
 </html>

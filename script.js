@@ -165,12 +165,12 @@ function deleteFromDB (api_key, student_id){
         url: 'http://s-apis.learningfuze.com/sgt/delete',
         success: function(response) {
             console.log('you successfully deleted the student');
-        }
+        },
         error: function(error) {
             console.log(error);
             alert("You were not able to delete student number "+ student_id+ " for the following reasons: "+ error);
         }
-    }
+    })
 }
 
 /**

@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 /**
  * Created by PhpStorm.
  * User: michpenn
@@ -36,7 +37,7 @@ session_start();
     <div class="student-add-form col-xs-12 col-md-push-9 col-md-3">
         <h4>Add Student</h4>
 
-        <form>
+        <form action="form.php" method="post">
             <div class="input-group form-group">
             <span class="input-group-addon">
                 <span class="glyphicon glyphicon-user"></span>
@@ -56,7 +57,7 @@ session_start();
                 <input type="text" class="form-control" name="studentGrade" id="studentGrade"
                        placeholder="Student Grade">
             </div>
-            <button type="button" class="btn btn-success form-group button_add">Add</button>
+            <button type="submit" class="btn btn-success form-group button_add">Add</button>
             <button type="button" class="btn btn-default form-group button_cancel">Cancel</button>
             <button type="button" class="btn btn-info form-group button_data">Get Data</button>
         </form>

@@ -8,7 +8,7 @@ if(mysqli_num_rows($rows)>0){
         ?>
         <td><?=$row['student name']?></td>
         <td><?=$row['course name']?></td>
-        <td><?=$row['grade']?></td>
+        <td class="grade"><?=$row['grade']?></td>
         <td><button type="button" class="btn btn-danger">Delete</button></td>
 
 <?php

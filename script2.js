@@ -112,6 +112,10 @@ function checkDB(object){
     });
 }
 
+function addThisStudent(){
+    console.log('on click works to add student');
+}
+
 //check if student exists. going to turn this into a prototype of a method of the student object
 function check_student() {}
 

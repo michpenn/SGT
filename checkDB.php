@@ -3,8 +3,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $student = $_POST;
     $student_found = null;
     $course_found = null;
-    $studentExists = null;
-    $courseExists = null;
 
     function checkForStudent()
     {
@@ -60,7 +58,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php
         }
 
+        mysqli_close($conn);
     }
+
 
     checkForStudent();
 
@@ -74,8 +74,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (mysqli_num_rows($rows2) > 0) {
             while ($row = mysqli_fetch_assoc($rows2)) {
                 $course_found['id'] = $row['id'];
-                global $courseExists;
-                $courseExists = true;
+                ?>
+                <script type="text/javascript">
+                    courseExists();
+                </script>
+                <?php
             }
         }
         if (mysqli_num_rows($rows2) == 0) {
@@ -93,69 +96,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <?php
         }
+        mysqli_close($conn);
     }
 
     checkForCourse();
+
 }
 
 ?>
-
-<script type="text/javascript">
-    function addThisStudent() {
-        <?php
-        $studentExists= false;
-        ?>
-
-    }
-    function studentExists() {
-        <?php
-        $studentExists= true;
-        ?>
-
-    }
-    function addThisCourse() {
-        <?php
-        $courseExists = false;
-      ?>
-    }
-
-
-    $('#close_modal').click(function () {
-        var modal_empty = $('.modal-body').children().length;
-        if (modal_empty <= 1) {
-
-            <?php
-            //require('sgt_connect.php')
-            //$instructor_id_query = "SELECT DISTINCT `instructor_id` FROM `grades` WHERE `course_id` = '{$course_found['id']}'";
-            //$rows = mysqli_query($conn, $instructor_id_query);
-
-
-            if(($studentExists)){
-            ?>
-            $('.trial').text("HELLO");
-            <?php
-            };
-
-            if((!$studentExists)){
-            ?>
-            $('.trial').text("byeeee");
-            <?php
-            };
-//            if(($studentExists) &&($courseExists)){
-//                }
-//                //var_dump($instructor_id);
-//
-//                //$query = "INSERT INTO `grades`(`id`, `student_id`, `course_id`, `instructor_id`, `grade`, `timestamp`) VALUES (null,'{}','{}',[value-4],'{$student['grade']}',NOW()";
-//
-//            }
-//            elseif (($studentExists) &&(!$courseExists)){}
-//            elseif ((!$studentExists) &&($courseExists)){}
-//            elseif ((!$studentExists) &&(!$courseExists)){}
-
-
-
-
-            ?>
-        }
-    })
-</script>

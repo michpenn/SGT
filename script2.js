@@ -1,7 +1,7 @@
 /**
  * Created by michpenn on 12/7/15.
  */
-
+var student;
 
 function click_handlers() {
     $('.button_add').click(function () {
@@ -14,13 +14,18 @@ function click_handlers() {
     $('.button_data').click(function () {
         populate_from_DB();
     });
+    $('#close_modal').click(function () {
+        makeQueries();
+    });
+
 }
 
 
 //must add student to page and data base MAKE OOP
-function add_student(){}
+function add_student() {
+}
 
-function check_form_inputs(){
+function check_form_inputs() {
     var student_name = $('#studentName').val();
     var student_course = $('#course').val();
     var student_grade = $('#studentGrade').val();
@@ -30,44 +35,44 @@ function check_form_inputs(){
     var valid_studentGrade = true;
 
     //check name is valid
-    if(student_name.length < 2) {
+    if (student_name.length < 2) {
         console.log('please enter a name');
         valid_studentName = false;
     }
-    if(typeof student_name !='string') {
+    if (typeof student_name != 'string') {
         console.log('please enter a real name');
         valid_studentName = false;
     }
     //check course is valid
-    if(student_course.length < 2) {
+    if (student_course.length < 2) {
         console.log('please enter a course');
         valid_studentCourse = false;
     }
-    if(typeof student_course !='string') {
+    if (typeof student_course != 'string') {
         console.log('please enter a real course');
         valid_studentCourse = false;
     }
     //check grade is valid
 
-    if(student_grade.length == 0) {
+    if (student_grade.length == 0) {
         console.log('please enter a grade');
         valid_studentGrade = false;
     }
 
-    if((student_grade > 100) || (student_grade < 0)) {
+    if ((student_grade > 100) || (student_grade < 0)) {
         console.log('please enter a real grade');
         valid_studentGrade = false;
     }
 
-   //by setting the 'input type' to 'number' in the add student form, we don't need to worry about non numbers
+    //by setting the 'input type' to 'number' in the add student form, we don't need to worry about non numbers
 
     //if all inputs are valid, make student object
-    if((valid_studentName) && (valid_studentCourse) && (valid_studentGrade)) {
+    if ((valid_studentName) && (valid_studentCourse) && (valid_studentGrade)) {
         //make inputs consistent with database inputs
         student_name = capitalizeFirstLetter(student_name);
         student_course = capitalizeFirstLetter(student_course);
         student_grade = parseFloat(student_grade);
-        var student = new make_student_object(student_name, student_course, student_grade);
+        student = new make_student_object(student_name, student_course, student_grade);
         console.log(student);
         checkDB(student);
     }
@@ -82,43 +87,84 @@ function make_student_object(name, course, grade) {
     self.name = name;
     self.course = course;
     self.grade = grade;
+    self.newstudent = null;
+    self.newcourse = null;
 }
 
-//make_student_object.prototype.checkDB = function(){
-//    $.ajax({
-//        url: 'checkDB.php',
-//        dataType: 'json',
-//        type: 'post',
-//        success: function (output) {
-//            console.log(output);
-//        }
-//    });
-//};
 
-function checkDB(object){
+function checkDB(object) {
     $.ajax({
         url: 'checkDB.php',
-        data: {name: object.name,
-        course: object.course,
-        grade: object.grade},
+        data: {
+            name: object.name,
+            course: object.course,
+            grade: object.grade
+        },
         dataType: 'text',
         type: 'post',
         success: function (output) {
             $('.modal-body').html(output);
             $('#myModal').modal('show');
         },
-        error: function(x,t,m){
+        error: function (x, t, m) {
             console.log(m);
         }
     });
 }
 
-//function addThisStudent(){
-//    console.log('on click works to add student');
-//}
+
+function makeQueries() {
+    console.log('makeQueries is called');
+    var modal_empty = $('.modal-body').children().length;
+    if (modal_empty <= 1) {
+        console.log('here goes the ajax call');
+        $.ajax({
+            url: 'DB_queries.php',
+            data: {
+                name: student.name,
+                course: student.course,
+                grade: student.grade,
+                newstudent: student.newstudent,
+                newcourse: student.newcourse
+            },
+            dataType: 'text',
+            type: 'get',
+            success: function(output) {
+                console.log('ajax worked successful ', output)
+            },
+            error: function (x, t, m) {
+                console.log(m);
+            }
+        });
+}
+else{
+        console.log('user needs to edit inputs');
+    }
+}
+
+function addThisStudent() {
+    student.newstudent = true;
+    console.log(student);
+}
+
+function studentExists() {
+    student.newstudent = false;
+    console.log(student);
+}
+
+function addThisCourse() {
+    student.newcourse = true;
+    console.log(student);
+}
+
+function courseExists() {
+    student.newcourse = false;
+    console.log(student);
+}
 
 //check if student exists. going to turn this into a prototype of a method of the student object
-function check_student() {}
+function check_student() {
+}
 
 
 //must delete student from page and database

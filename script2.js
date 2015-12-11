@@ -69,6 +69,7 @@ function check_form_inputs(){
         student_grade = parseFloat(student_grade);
         var student = new make_student_object(student_name, student_course, student_grade);
         console.log(student);
+        checkDB(student);
     }
 }
 //for formatting
@@ -81,13 +82,38 @@ function make_student_object(name, course, grade) {
     self.name = name;
     self.course = course;
     self.grade = grade;
+}
 
+//make_student_object.prototype.checkDB = function(){
+//    $.ajax({
+//        url: 'checkDB.php',
+//        dataType: 'json',
+//        type: 'post',
+//        success: function (output) {
+//            console.log(output);
+//        }
+//    });
+//};
+
+function checkDB(object){
+    $.ajax({
+        url: 'checkDB.php',
+        data: {name: object.name,
+        course: object.course,
+        grade: object.grade},
+        dataType: 'text',
+        type: 'post',
+        success: function (output) {
+            $('.trial').html(output);
+        },
+        error: function(x,t,m){
+            console.log(m);
+        }
+    });
 }
 
 //check if student exists. going to turn this into a prototype of a method of the student object
-function check_student() {
-
-}
+function check_student() {}
 
 
 //must delete student from page and database

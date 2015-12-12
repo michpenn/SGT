@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $query = "INSERT INTO courses(`id`, `course`) VALUES (null,'{$student_object['course']}')";
         mysqli_query($conn, $query);
         $courseData['id'] = mysqli_insert_id($conn);
-        $instructorData['instructor_id'] = rand(1,2);
+        $instructorData['instructor_id'] = rand(1, 2);
     };
 
     if ($student_object['newcourse'] == 'false') {
@@ -57,29 +57,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     };
 
     if (isset($studentNew) && isset($courseNew)) {
-
-
         if (($studentNew) && ($courseNew)) {
-            echo 'need student and new course, update all tables';
-
-        } elseif ((!$studentNew) && ($courseNew)) {
-            echo 'existing student but new course, need course id and instructor id';
-
-
-        } elseif (($studentNew) && (!$courseNew)) {
-            echo 'new student but existing course';
-            $query = "INSERT INTO `grades`(`id`, `student_id`, `course_id`, `instructor_id`, `grade`, `timestamp`)
-            VALUES (null,{$studentData['id']},{$courseData['id']},{$instructorData['instructor_id']},{$student_object['grade']},NOW())";
-
-
-        } elseif ((!$studentNew) && (!$courseNew)) {
             $query = "INSERT INTO `grades`(`id`, `student_id`, `course_id`, `instructor_id`, `grade`, `timestamp`)
             VALUES (null,{$studentData['id']},{$courseData['id']},{$instructorData['instructor_id']},{$student_object['grade']},NOW())";
             mysqli_query($conn, $query);
 
+        } else {
+            echo 'You need to fix your form';
         }
-    } else {
-        echo 'You need to fix your form';
-    }
 
+    }
 }

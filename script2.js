@@ -162,6 +162,8 @@ function courseExists() {
     console.log(student);
 }
 
+//TODO CHECK WHO TEACHES THE NEW CLASS
+
 //check if student exists. going to turn this into a prototype of a method of the student object
 function check_student() {
 }

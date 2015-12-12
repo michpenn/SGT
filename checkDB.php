@@ -1,5 +1,8 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if(!$using_internally_as_html) {
+        ob_start();
+    }
     $student = $_POST;
     $student_found = null;
     $course_found = null;
@@ -100,6 +103,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     checkForCourse();
+if(!$using_internally_as_html) {
+    $html = ob_get_contents();
+    ob_end_clean();
+    $output_array = ['success' => true, 'html' => $html,'number_of_messages'=>$messages];
+    print(json_encode($output_array));
+}
 
 }
 

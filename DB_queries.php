@@ -57,11 +57,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     };
 
     if (isset($studentNew) && isset($courseNew)) {
-        if (($studentNew) && ($courseNew)) {
-            $query = "INSERT INTO `grades`(`id`, `student_id`, `course_id`, `instructor_id`, `grade`, `timestamp`)
+        $query = "INSERT INTO `grades`(`id`, `student_id`, `course_id`, `instructor_id`, `grade`, `timestamp`)
             VALUES (null,{$studentData['id']},{$courseData['id']},{$instructorData['instructor_id']},{$student_object['grade']},NOW())";
-            mysqli_query($conn, $query);
+        mysqli_query($conn, $query);
+        $query2 = "SELECT s.name AS 'student name', s.id AS 'student id', c.course AS 'course name', i.name AS 'instructor name', g.grade FROM `grades` AS g JOIN `students` AS s on g.student_id = s.id JOIN `courses` AS c on g.course_id = c.id JOIN `instructors` AS i on g.instructor_id = i.id ORDER BY g.id DESC LIMIT 1";
+        $rows = mysqli_query($conn, $query2);
+        if (mysqli_num_rows($rows) > 0) {
+            while ($row = mysqli_fetch_assoc($rows)) {
+                echo "<tr>";
+                ?>
+                <td><?=$row['student name']?></td>
+                <td><?=$row['student id']?></td>
+                <td><?=$row['course name']?></td>
+                <td class="grade"><?=$row['grade']?></td>
+                <td><button type="button" class="btn btn-danger">Delete</button></td>
 
+                <?php
+                $output[] = $row;
+
+                echo "</tr>";
+
+            }
         } else {
             echo 'You need to fix your form';
         }

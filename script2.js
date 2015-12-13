@@ -130,7 +130,8 @@ function makeQueries() {
             dataType: 'text',
             type: 'get',
             success: function(output) {
-                console.log('ajax worked successful ', output)
+                $('.table_body').append(output);
+                calculate_average();
             },
             error: function (x, t, m) {
                 console.log(m);
@@ -144,22 +145,18 @@ else{
 
 function addThisStudent() {
     student.newstudent = true;
-    console.log(student);
 }
 
 function studentExists() {
     student.newstudent = false;
-    console.log(student);
 }
 
 function addThisCourse() {
     student.newcourse = true;
-    console.log(student);
 }
 
 function courseExists() {
     student.newcourse = false;
-    console.log(student);
 }
 
 //TODO CHECK WHO TEACHES THE NEW CLASS
@@ -208,6 +205,7 @@ function populate_from_DB() {
         type: 'post',
         success: function (output) {
             $('.table_body').html(output);
+            calculate_average();
         }
     });
 }

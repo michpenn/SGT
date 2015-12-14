@@ -43,12 +43,14 @@ session_start();
                 <span class="glyphicon glyphicon-user"></span>
             </span>
                 <input type="text" class="form-control" name="studentName" id="studentName" placeholder="Student Name">
+                <span class="error"></span>
             </div>
             <div class="input-group form-group">
             <span class="input-group-addon">
                 <span class="glyphicon glyphicon-list-alt"></span>
             </span>
                 <input type="text" class="form-control" name="course" id="course" placeholder="Student Course">
+                <span class="error"></span>
             </div>
             <div class="input-group form-group">
             <span class="input-group-addon">
@@ -56,6 +58,7 @@ session_start();
             </span>
                 <input type="number" class="form-control" name="studentGrade" id="studentGrade"
                        placeholder="Student Grade">
+                <span class="error"></span>
             </div>
             <button type="button" class="btn btn-success form-group button_add">Add</button>
             <button type="button" class="btn btn-default form-group button_cancel">Cancel</button>

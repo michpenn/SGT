@@ -3,9 +3,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 //    if(!$using_internally_as_html) {
 //        ob_start();
 //    }
-    $student = $_POST;
-    $student_found = null;
-    $course_found = null;
+
 
     function checkForStudent()
     {

@@ -74,7 +74,7 @@ function check_form_inputs() {
         student_grade = parseFloat(student_grade);
         student = new make_student_object(student_name, student_course, student_grade);
         console.log(student);
-        checkDB(student);
+        form(student);
     }
 }
 //for formatting
@@ -91,6 +91,25 @@ function make_student_object(name, course, grade) {
     self.newcourse = null;
 }
 
+function form(object) {
+    $.ajax({
+        url: 'form.php',
+        data: {
+            name: object.name,
+            course: object.course,
+            grade: object.grade
+        },
+        dataType: 'text',
+        type: 'post',
+        success: function(output) {
+            console.log('this is the output ' + output);
+        },
+        error: function (x, t, m) {
+            console.log(m);
+        }
+
+    });
+}
 
 function checkDB(object) {
     $.ajax({

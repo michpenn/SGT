@@ -1,11 +1,59 @@
 <?php
-if ($_SERVER['REQUEST_METHOD'] == "POST") {
+if ($_POST) {
     $valid = true;
-    $student['name'] = $_POST['studentName'];
-    $student['course'] = $_POST['course'];
-    $student['grade'] = $_POST['studentGrade'];
+    $student = $_POST;
+    $nameErr = $courseErr = $gradeErr = "";
+    $name = $course = $grade = "";
+
+    //sanitizes the data
+    function test_input($data)
+    {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+    }
+
+    if (empty($student['name'])) {
+        $nameErr = "Name is required";
+    } else {
+        $name = test_input($student['name']);
+        if (!preg_match("/^([A-Z][a-z]*([\\s][A-Z][\\.])?)$/", $name)) {
+            $nameErr = 'The name does not match the name format. Please edit and resubmit';
+            $name = '';
+            $valid = false;
+        }
+        echo ' ' . $name;
+        echo $nameErr;
+    }
+    if (empty($student['course'])) {
+        $courseErr = 'Course is required';
+    } else {
+        $course = test_input($student['course']);
+        if (!preg_match("/^([A-Z][A-Za-z0-9\-]*([ ]{0,1}[A-Z][A-Za-z0-9]*)?)$/", $course)) {
+            $courseErr = 'The course name does not match the format. Please edit and resubmit';
+            $course = '';
+            $valid = false;
+        }
+        echo ' ' . $course . $courseErr;
+    }
+    if (empty($student['grade'])) {
+        $gradeErr = 'Grade is required';
+
+    } else {
+        $grade = test_input($student['grade']);
+        if (!preg_match("^(100$|0$|[1-9][0-9]{0,1}$)^", $grade)) {
+            $gradeErr = 'Please enter a numeric grade';
+            $grade = '';
+            $valid = false;
+        }
+        echo ' ' . $grade . $gradeErr;
+    }
+
+
     if ($valid) {
-                header('location: index.php');
-                exit();
-        };
+        $student = array('name' => $name, 'course' => $course, 'grade' => $grade, 'new student' => null, 'new course' => null);
+        print_r($student);
+        return $student;
+    };
 }

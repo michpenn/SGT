@@ -23,8 +23,6 @@ if ($_POST) {
             $name = '';
             $valid = false;
         }
-        echo ' ' . $name;
-        echo $nameErr;
     }
     if (empty($student['course'])) {
         $courseErr = 'Course is required';
@@ -35,7 +33,6 @@ if ($_POST) {
             $course = '';
             $valid = false;
         }
-        echo ' ' . $course . $courseErr;
     }
     if (empty($student['grade'])) {
         $gradeErr = 'Grade is required';
@@ -47,13 +44,18 @@ if ($_POST) {
             $grade = '';
             $valid = false;
         }
-        echo ' ' . $grade . $gradeErr;
     }
 
 
     if ($valid) {
-        $student = array('name' => $name, 'course' => $course, 'grade' => $grade, 'new student' => null, 'new course' => null);
-        print_r($student);
+        $student = array('name' => $name,
+            'course' => $course,
+            'grade' => $grade,
+            'new student' => null,
+            'new course' => null,
+            'student id' => null,
+            'course id' => null);
+        include 'trial.php';
         return $student;
     };
 }

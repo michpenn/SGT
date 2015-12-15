@@ -15,7 +15,7 @@ function click_handlers() {
         populate_from_DB();
     });
     $('#close_modal').click(function () {
-        makeQueries();
+        //makeQueries();
     });
 
 }
@@ -102,7 +102,9 @@ function form(object) {
         dataType: 'text',
         type: 'post',
         success: function(output) {
-            console.log('this is the output ' + output);
+            //console.log('this is the output ' + output);
+            $('.modal-body').html(output);
+            $('#myModal').modal('show');
         },
         error: function (x, t, m) {
             console.log(m);

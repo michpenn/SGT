@@ -71,7 +71,7 @@ function checkForCourse()
     $rows = mysqli_query($conn, $query);
     if (mysqli_num_rows($rows) > 0) {
         while ($row = mysqli_fetch_assoc($rows)) {
-
+//TODO GET COURSE ID HERE
         }
     } elseif (mysqli_num_rows($rows) == 0) {
 
@@ -84,8 +84,8 @@ function checkForCourse()
                         this
                         course? <br>
                     </div>
-                    <div class=col-xs-2 col-xs-offset-1> Yes <input type="radio" name="course" value="newCourse"></div>
-                    <div class=col-xs-2> No <input type="radio" name="course" value="nullCourse"></div>
+                    <div class=col-xs-2 col-xs-offset-1> Yes <input type="radio" name="course" value="true"></div>
+                    <div class=col-xs-2> No <input type="radio" name="course" value="null"></div>
 
                 </div>
             </div>
@@ -96,12 +96,6 @@ function checkForCourse()
     ?>
 
     </form>
-    <script type="text/javascript">
-        $('#close_modal').click(function () {
-            console.log('here is how to get the radio values');
-            var newStudent = ($('input[name="student"]:checked').val());
-            var newCourse = ($('input[name="course"]:checked').val());
-        });
-    </script>
+
     <?php
 }

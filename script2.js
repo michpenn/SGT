@@ -15,7 +15,7 @@ function click_handlers() {
         populate_from_DB();
     });
     $('#close_modal').click(function () {
-        //makeQueries();
+        makeQueries();
     });
 
 }
@@ -137,31 +137,34 @@ function checkDB(object) {
 function makeQueries() {
     console.log('makeQueries is called');
     var modal_empty = $('.modal-body').children().length;
-    if (modal_empty <= 1) {
-        console.log('here goes the ajax call');
-        $.ajax({
-            url: 'DB_queries.php',
-            data: {
-                name: student.name,
-                course: student.course,
-                grade: student.grade,
-                newstudent: student.newstudent,
-                newcourse: student.newcourse
-            },
-            dataType: 'text',
-            type: 'get',
-            success: function(output) {
-                $('.table_body').append(output);
-                calculate_average();
-            },
-            error: function (x, t, m) {
-                console.log(m);
-            }
-        });
-}
-else{
-        console.log('user needs to edit inputs');
-    }
+    var newStudent = ($('input[name="student"]:checked').val());
+    var newCourse = ($('input[name="course"]:checked').val());
+    console.log(newStudent, newCourse);
+//    if (modal_empty <= 1) {
+//        console.log('here goes the ajax call');
+//        $.ajax({
+//            url: 'DB_queries.php',
+//            data: {
+//                name: student.name,
+//                course: student.course,
+//                grade: student.grade,
+//                newstudent: student.newstudent,
+//                newcourse: student.newcourse
+//            },
+//            dataType: 'text',
+//            type: 'get',
+//            success: function(output) {
+//                $('.table_body').append(output);
+//                calculate_average();
+//            },
+//            error: function (x, t, m) {
+//                console.log(m);
+//            }
+//        });
+//}
+//else{
+//        console.log('user needs to edit inputs');
+//    }
 }
 
 function addThisStudent() {

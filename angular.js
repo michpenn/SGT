@@ -26,8 +26,8 @@ SGT.controller('appController',function(studentService){
 SGT.controller('formController',function(studentService){
     var self = this;
     self.formControl = function(){};
-    self.callAddStudent = function(){
-        studentService.addStudent();
+    self.callAddStudent = function(student){
+        studentService.addStudent(student);
     };
     self.handleError = function(){};
     /*
@@ -56,9 +56,19 @@ SGT.controller('studentListController', function(studentService){
 /*
 * Below is the student service
 * */
-SGT.service('studentService', function(){
+SGT.service('studentService', function($http){
     var self = this;
-    self.addStudent = function(){};
+    self.addStudent = function(student){
+        $http({
+            url: '',
+            method: '',
+            cache: false
+        })
+            .then(
+            function(response){},
+            function(response){}
+        )
+    };
     self.deleteStudent = function(){};
     self.update = function(){};
     self.loadData = function(){};

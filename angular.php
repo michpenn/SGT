@@ -36,7 +36,7 @@ session_start();
     <div class="page-header">
         <!-- only show this element when the isnt on mobile -->
         <h1 class="hidden-xs hidden-sm">Student Grade Table
-            <small class="col-md-offset-6 text-right">Grade Average : <span class="avgGrade"></span></small>
+            <small class="col-md-offset-6 text-right">Grade Average : <span class="avgGrade" ng-bind="ac.calcAverage()"></span></small>
         </h1>
         <!-- only show this element when the user gets to a mobile version -->
         <h3 class="hidden-md hidden-lg">Student Grade Table
@@ -72,7 +72,7 @@ session_start();
             </div>
             <button type="button" class="btn btn-success form-group button_add" ng-click="fc.callAddStudent(fc.student)">Add</button>
             <button type="button" class="btn btn-default form-group button_cancel">Cancel</button>
-            <button type="button" class="btn btn-info form-group button_data">Get Data</button>
+            <button type="button" class="btn btn-info form-group button_data" ng-click="ac.getData()">Get Data</button>
         </form>
 
     </div>
@@ -89,8 +89,8 @@ session_start();
             </thead>
             <tbody>
             <tr ng-repeat="student in ac.studentArray">
-                <td>{{student.name}}</td>
-                <td>{{student.course}}</td>
+                <td>{{student.student_name}}</td>
+                <td>{{student.course_name}}</td>
                 <td>{{student.grade}}</td>
                 <td><button>Delete</button></td>
             </tr>

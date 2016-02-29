@@ -59,12 +59,17 @@ function checkForCourse($course)
 
 function addStudent()
 {
+    global $conn;
     global $postData;
     $student = objectToArray($postData);
     $studentExists = checkForStudent($student['name']);
     $courseExists = checkForCourse($student['course']);
     if(!$studentExists && !$courseExists){
-        $query = "INSERT INTO ``";
+        $query = "INSERT INTO students(`id`, `creator_id`, `name`) VALUES (null,1,'{$student['name']}')";
+        $query .= "INSERT INTO courses(`id`, `course`) VALUES (null,'{$student['course']}')";
+        if($conn->multi_query($query)===TRUE){
+
+        }
     }
 };
 

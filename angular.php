@@ -52,14 +52,14 @@ session_start();
             <span class="input-group-addon">
                 <span class="glyphicon glyphicon-user"></span>
             </span>
-                <input type="text" class="form-control" name="studentName" id="studentName" placeholder="Student Name" ng-model="fc.student.name">
+                <input type="text" class="form-control" name="studentName" id="studentName" placeholder="Student Name" ng-model="fc.student.name" required>
                 <span class="error"></span>
             </div>
             <div class="input-group form-group">
             <span class="input-group-addon">
                 <span class="glyphicon glyphicon-list-alt"></span>
             </span>
-                <input type="text" class="form-control" name="course" id="course" placeholder="Student Course" ng-model="fc.student.course">
+                <input type="text" class="form-control" name="course" id="course" placeholder="Student Course" ng-model="fc.student.course" required>
                 <span class="error"></span>
             </div>
             <div class="input-group form-group">
@@ -67,7 +67,7 @@ session_start();
                 <span class="glyphicon glyphicon-education"></span>
             </span>
                 <input type="number" class="form-control" name="studentGrade" id="studentGrade"
-                       placeholder="Student Grade" ng-model="fc.student.grade">
+                       placeholder="Student Grade" ng-model="fc.student.grade" required>
                 <span class="error"></span>
             </div>
             <button type="button" class="btn btn-success form-group button_add" ng-click="fc.callAddStudent(fc.student)">Add</button>
@@ -92,7 +92,7 @@ session_start();
                 <td>{{student.student_name}}</td>
                 <td>{{student.course_name}}</td>
                 <td>{{student.grade}}</td>
-                <td><button>Delete</button></td>
+                <td><button ng-click="slc.callDeleteStudent()">Delete</button></td>
             </tr>
             </tbody>
         </table>

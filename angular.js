@@ -31,7 +31,6 @@ SGT.controller('appController', function (studentService, $http) {
         $http.get('getdata.php').then(function (response) {
             self.studentArray = response.data;
             self.calcAverage();
-            console.log(self.studentArray);
         });
     };
 
@@ -48,13 +47,15 @@ SGT.controller('formController', function (studentService) {
     };
     self.callAddStudent = function (student) {
         var studentAdded = studentService.addStudent(student);
-        var gradeTableID = studentAdded.$$state.value;
-        console.log('ID of new entry is: ',gradeTableID);
+        console.log('ID of new entry is: ',studentAdded);
+        self.addToStudentArray();
     };
     self.handleError = function () {
         console.log('handle errors here');
     };
-    self.addToStudentArray = function(){};
+    self.addToStudentArray = function(){
+        console.log(this);
+    };
     /*
      * Requirements:
      * 1. Handle Inputs and validating inputs using angular filters

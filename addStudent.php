@@ -23,6 +23,10 @@ function objectToArray($d)
     }
 }
 
+/**
+ * @param $name
+ * @return bool
+ */
 function checkForStudent($name)
 {
     global $conn;
@@ -31,8 +35,7 @@ function checkForStudent($name)
     if ($result->num_rows > 0) {
         // output data of each row
         while ($row = $result->fetch_assoc()) {
-            var_dump($row);
-            return $row;
+            return $row['id'];
         }
     } else {
         return false;
@@ -40,7 +43,10 @@ function checkForStudent($name)
 }
 
 ;
-
+/**
+ * @param $course
+ * @return bool
+ */
 function checkForCourse($course)
 {
     global $conn;
@@ -49,14 +55,54 @@ function checkForCourse($course)
     if ($result->num_rows > 0) {
         // output data of each row
         while ($row = $result->fetch_assoc()) {
-            var_dump($row);
-            return $row;
+            return $row['id'];
         }
     } else {
         return false;
     }
-};
+}
 
+;
+/**
+ * @param $name
+ * @return mixed
+ */
+function addNewStudent($name)
+{
+    global $conn;
+    $query = "INSERT INTO students(`id`, `creator_id`, `name`) VALUES (null,1,'{$name}')";
+    $result = $conn->query($query);
+    return $conn->insert_id;
+}
+
+/**
+ * @param $course
+ * @return mixed
+ */
+function addNewCourse($course)
+{
+
+    global $conn;
+    $query = "INSERT INTO courses(`id`, `course`) VALUES (null,'{$course}')";
+    $result = $conn->query($query);
+    return $conn->insert_id;
+}
+
+
+function addToGradeTable($nameID, $courseID, $grade)
+{
+    global $conn;
+    $query = "INSERT INTO `grades`(`id`, `student_id`, `course_id`, `grade`, `timestamp`) VALUES (null,{$nameID},{$courseID},{$grade},NOW())";
+    if($conn->query($query) === TRUE) {
+    }
+    else {
+        echo 'error in adding student';
+    };
+}
+
+/**
+ *
+ */
 function addStudent()
 {
     global $conn;
@@ -64,13 +110,33 @@ function addStudent()
     $student = objectToArray($postData);
     $studentExists = checkForStudent($student['name']);
     $courseExists = checkForCourse($student['course']);
-    if(!$studentExists && !$courseExists){
-        $query = "INSERT INTO students(`id`, `creator_id`, `name`) VALUES (null,1,'{$student['name']}')";
-        $query .= "INSERT INTO courses(`id`, `course`) VALUES (null,'{$student['course']}')";
-        if($conn->multi_query($query)===TRUE){
+    if (!$studentExists && !$courseExists) {
+        $studentID = addNewStudent($student['name']);
+        $courseID = addNewCourse($student['course']);
+    } else if (!$studentExists && $courseExists) {
+        $studentID = addNewStudent($student['name']);
+        $courseID = $courseExists;
+    } else if (!$courseExists && $studentExists) {
+        $studentID = $studentExists;
+        $courseID = addNewCourse($student['course']);
+    } else {
+        $studentID = $studentExists;
+        $courseID = $courseExists;
+    }
+
+    if(isset($studentID) && isset($courseID)){
+        $query = "INSERT INTO `grades`(`id`, `student_id`, `course_id`, `grade`, `timestamp`) VALUES (null,{$studentID},{$courseID},{$student['grade']},NOW())";
+        if($conn->query($query) === TRUE) {
+            echo $conn->insert_id;
+            return $conn->insert_id;
 
         }
+        else {
+            echo 'error in adding student';
+        };
     }
-};
+}
+
+;
 
 addStudent();

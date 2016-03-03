@@ -23,7 +23,7 @@ SGT.controller('appController', function (studentService, $http) {
             for (var i = 0; i < self.studentArray.length; i++) {
                 sum += parseFloat(self.studentArray[i].grade);
             }
-            average = sum/self.studentArray.length;
+            average = sum / self.studentArray.length;
         }
         return average.toPrecision(3) + '%';
     };
@@ -31,6 +31,7 @@ SGT.controller('appController', function (studentService, $http) {
         $http.get('getdata.php').then(function (response) {
             self.studentArray = response.data;
             self.calcAverage();
+            console.log(self.studentArray);
         });
     };
 
@@ -46,10 +47,14 @@ SGT.controller('formController', function (studentService) {
     self.formControl = function () {
     };
     self.callAddStudent = function (student) {
-        studentService.addStudent(student);
+        var studentAdded = studentService.addStudent(student);
+        var gradeTableID = studentAdded.$$state.value;
+        console.log('ID of new entry is: ',gradeTableID);
     };
     self.handleError = function () {
+        console.log('handle errors here');
     };
+    self.addToStudentArray = function(){};
     /*
      * Requirements:
      * 1. Handle Inputs and validating inputs using angular filters
@@ -79,21 +84,14 @@ SGT.controller('studentListController', function (studentService) {
 SGT.service('studentService', function ($http) {
     var self = this;
     self.addStudent = function (student) {
-        console.log(student);
-        $http.post('addStudent.php', student).success(function(response){
-            console.log(response);
-        });
-        //$http({
-        //    url: '',
-        //    method: '',
-        //    cache: true
-        //})
-        //    .then(
-        //    function (response) {
-        //    },
-        //    function (response) {
-        //    }
-        //)
+        return $http.post('addStudent.php', student)
+            .then(function (response) {
+                console.log('response: ', response.data);
+                return response.data;
+
+            },function (response) {
+                console.log('error response: ', response.status);
+            });
     };
     self.deleteStudent = function () {
     };

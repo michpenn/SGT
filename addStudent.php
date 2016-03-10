@@ -2,26 +2,10 @@
 require('sgt_connect.php');
 $data = file_get_contents("php://input");
 $postData = json_decode($data);
+include('reusableFunctions.php');
 //query to see if student exists already, if it does, use same student id
 //query to see if course exists already, if it does, use same course id
-/**
- * @param $d
- * @return array
- */
-function objectToArray($d)
-{
-    //check if input is an object
-    if (is_object($d)) {
-        //gets the properties of the object
-        $d = get_object_vars($d);
-    }
-//check if input is an array, then return an object
-    if (is_array($d)) {
-        return array_map(__FUNCTION__, $d);
-    } else {
-        return $d;
-    }
-}
+
 
 /**
  * @param $name
@@ -93,13 +77,25 @@ function addToGradeTable($nameID, $courseID, $grade)
 {
     global $conn;
     $query = "INSERT INTO `grades`(`id`, `student_id`, `course_id`, `grade`, `timestamp`) VALUES (null,{$nameID},{$courseID},{$grade},NOW())";
-    if($conn->query($query) === TRUE) {
-    }
-    else {
+    if ($conn->query($query) === TRUE) {
+    } else {
         echo 'error in adding student';
     };
 }
 
+function getLastEntry($id)
+{
+    global $conn;
+    $json_output = array();
+    $query = "SELECT s.name AS 'student_name', c.course AS 'course_name', g.grade FROM `grades` AS g JOIN `students` AS s on g.student_id = s.id JOIN `courses` AS c on g.course_id = c.id WHERE g.id = {$id}";
+    $result = mysqli_query($conn, $query);
+    if(mysqli_num_rows($result)>0){
+        while($row = mysqli_fetch_assoc($result)) {
+            $json_output[] = $row;
+        }
+        return json_encode($json_output);
+    }
+}
 /**
  *
  */
@@ -124,19 +120,19 @@ function addStudent()
         $courseID = $courseExists;
     }
 
-    if(isset($studentID) && isset($courseID)){
+    if (isset($studentID) && isset($courseID)) {
         $query = "INSERT INTO `grades`(`id`, `student_id`, `course_id`, `grade`, `timestamp`) VALUES (null,{$studentID},{$courseID},{$student['grade']},NOW())";
-        if($conn->query($query) === TRUE) {
+        if ($conn->query($query) === TRUE) {
             echo $conn->insert_id;
-            return $conn->insert_id;
+            getLastEntry($conn->insert_id);
 
-        }
-        else {
+        } else {
             echo 'error in adding student';
         };
     }
 }
 
 ;
+
 
 addStudent();

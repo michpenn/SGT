@@ -45,17 +45,18 @@ SGT.controller('formController', function (studentService) {
     var self = this;
     self.formControl = function () {
     };
-    self.callAddStudent = function (student) {
+    self.callAddStudent = function (array,student) {
         var studentAdded = studentService.addStudent(student);
         console.log('ID of new entry is: ',studentAdded);
-        self.addToStudentArray();
+        self.addToStudentArray(student,array);
     };
     self.handleError = function () {
         console.log('handle errors here');
     };
-    self.addToStudentArray = function(){
-        console.log(this);
+    self.addToStudentArray = function(student,array){
+        array.push(student);
     };
+    self.clearFormInputs = function(){};
     /*
      * Requirements:
      * 1. Handle Inputs and validating inputs using angular filters
@@ -67,8 +68,17 @@ SGT.controller('studentListController', function (studentService) {
     var self = this;
     self.studentArray = [];
     self.loadData = false;
-    self.callDeleteStudent = function (this_student) {
-        studentService.deleteStudent(this_student.student);
+    self.callDeleteStudent = function (array,this_student) {
+        var studentCopy = this_student;
+        var studentDeleted = studentService.deleteStudent(this_student.student);
+        self.deleteFromStudentArray(studentCopy, studentDeleted, array);
+    };
+    self.deleteFromStudentArray = function(student, response, array){
+        console.log('student: ',student['$index']);
+        //TODO: if response is true, then splice. Need help with this
+        console.log('response: ', response);
+        console.log('array: ', array);
+        array.splice(student['$index'], 1)
     };
     /*
      * Requirements:
@@ -87,8 +97,8 @@ SGT.service('studentService', function ($http) {
     self.addStudent = function (student) {
         return $http.post('addStudent.php', student)
             .then(function (response) {
-                console.log('response: ', response.data);
-                return response.data;
+                console.log('response: ', response.config.data);
+                return response.config.data;
 
             },function (response) {
                 console.log('error response: ', response.status);
@@ -97,8 +107,12 @@ SGT.service('studentService', function ($http) {
     self.deleteStudent = function (student) {
         return $http.post('deleteStudent.php', student)
             .then(function (response) {
-                console.log('response: ', response.data);
-                return response.data;
+                if (response.data === 'true') {
+                    return true;
+                }
+                else {
+                    return false;
+                }
 
             },function (response) {
                 console.log('error response: ', response.status);

@@ -54,7 +54,8 @@ function deleteEntry($entryID){
     global $conn;
     $query = "DELETE FROM `grades` WHERE `id`={$entryID}";
     $result = $conn->query($query);
-        var_dump($result);
+    return var_export($result);
+
 
 }
 deleteEntry(findEntry($deleteStudent['student_name'], $deleteStudent['course_name'], $deleteStudent['grade']));

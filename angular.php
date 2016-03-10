@@ -70,7 +70,7 @@ session_start();
                        placeholder="Student Grade" ng-model="fc.student.grade" required>
                 <span class="error"></span>
             </div>
-            <button type="button" class="btn btn-success form-group button_add" ng-click="fc.callAddStudent(fc.student)">Add</button>
+            <button type="button" class="btn btn-success form-group button_add" ng-click="fc.callAddStudent(ac.studentArray,fc.student)">Add</button>
             <button type="button" class="btn btn-default form-group button_cancel">Cancel</button>
             <button type="button" class="btn btn-info form-group button_data" ng-click="ac.getData()">Get Data</button>
         </form>
@@ -92,7 +92,7 @@ session_start();
                 <td>{{student.student_name}}</td>
                 <td>{{student.course_name}}</td>
                 <td>{{student.grade}}</td>
-                <td><button ng-click="slc.callDeleteStudent(this)">Delete</button></td>
+                <td><button ng-click="slc.callDeleteStudent(ac.studentArray,this)">Delete</button></td>
             </tr>
             </tbody>
         </table>

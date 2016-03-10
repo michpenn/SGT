@@ -67,8 +67,9 @@ SGT.controller('studentListController', function (studentService) {
     var self = this;
     self.studentArray = [];
     self.loadData = false;
-    self.callDeleteStudent = function () {
-        studentService.deleteStudent();
+    self.callDeleteStudent = function (this_student) {
+        console.log('here: ', this_student ,this_student.student);
+        studentService.deleteStudent(this_student);
     };
     /*
      * Requirements:
@@ -94,7 +95,8 @@ SGT.service('studentService', function ($http) {
                 console.log('error response: ', response.status);
             });
     };
-    self.deleteStudent = function () {
+    self.deleteStudent = function (student) {
+        console.log('delete student service called', student);
     };
     self.update = function () {
     };

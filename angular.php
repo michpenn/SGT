@@ -92,7 +92,7 @@ session_start();
                 <td>{{student.student_name}}</td>
                 <td>{{student.course_name}}</td>
                 <td>{{student.grade}}</td>
-                <td><button ng-click="slc.callDeleteStudent()">Delete</button></td>
+                <td><button ng-click="slc.callDeleteStudent(this)">Delete</button></td>
             </tr>
             </tbody>
         </table>
